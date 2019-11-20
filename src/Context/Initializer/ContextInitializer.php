@@ -48,11 +48,11 @@ class ContextInitializer implements BehatContextInitializer
 
         if ($context instanceof Psr11MinkAwareContext) {
             $container = $this->factory->createContainer();
-            $context->setContainer($container);
 
             $application = $this->factory->createApplication($container);
             $this->kernel->setApplication($application);
 
+            $context->setContainer($container);
             $context->setMinkSession(($this->minkSessionFactory)($this->kernel));
         }
     }
