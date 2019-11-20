@@ -1,17 +1,29 @@
 services:
 
+  acpr.behat.psr.factory:
+    class: Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory
+    shared: true
+    arguments:
+      - '%acpr.behat.psr.container.file%'
+      - '%acpr.behat.psr.application.file%'
+
   acpr.behat.psr.context.initializer:
     class: Acpr\Behat\Psr\Context\Initializer\ContextInitializer
     arguments:
       - "@acpr.behat.psr.factory"
+      - "@acpr.behat.psr.mink-session-factory"
       - "@acpr.behat.psr.kernel"
-      - '%mink.base_url%'
     tags:
       - { name: context.initializer }
 
   acpr.behat.psr.client:
     class: Symfony\Component\HttpKernel\HttpKernelBrowser
     arguments: [ "@acpr.behat.psr.kernel" ]
+
+  acpr.behat.psr.mink-session-factory:
+    class: Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory
+    shared: true
+    arguments: [ "%mink.base_url" ]
 
   acpr.behat.psr.kernel:
     class: Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel
@@ -22,14 +34,11 @@ services:
   acpr.behat.psr.translator:
     class: Acpr\Behat\Psr\SymfonyPsrTranslator
     arguments:
-      - "@acpr.behat.psr.translator.httpfoundationfactory"
-      - "@acpr.behat.psr.translator.psrhttpfactory"
+      - "@Symfony\\Bridge\\PsrHttpMessage\\Factory\\HttpFoundationFactory"
+      - "@Symfony\\Bridge\\PsrHttpMessage\\Factory\\PsrHttpFactory"
 
-  acpr.behat.psr.translator.httpfoundationfactory:
-    class: Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory
-
-  acpr.behat.psr.translator.psrhttpfactory:
-    class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
+  Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: ~
+  Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory:
     arguments:
       - "@Zend\\Diactoros\\ServerRequestFactory"
       - "@Zend\\Diactoros\\StreamFactory"

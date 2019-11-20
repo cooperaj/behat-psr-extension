@@ -7,6 +7,7 @@ namespace Acpr\Behat\Psr\Context\Initializer;
 use Acpr\Behat\Psr\Context\Psr11AwareContext;
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
+use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
@@ -21,19 +22,22 @@ class ContextInitializer implements BehatContextInitializer
      */
     private $factory;
     /**
-     * @var string
+     * @var MinkSessionFactory
      */
-    private $minkBasePath;
+    private $minkSessionFactory;
     /**
      * @var RuntimeConfigurableKernel
      */
     private $kernel;
 
-    public function __construct(PsrFactory $factory, RuntimeConfigurableKernel $kernel, string $minkBasePath)
+    public function __construct(
+        PsrFactory $factory,
+        MinkSessionFactory $minkSessionFactory,
+        RuntimeConfigurableKernel $kernel)
     {
         $this->factory = $factory;
+        $this->minkSessionFactory = $minkSessionFactory;
         $this->kernel = $kernel;
-        $this->minkBasePath = $minkBasePath;
     }
 
     public function initializeContext(Context $context): void
@@ -49,10 +53,7 @@ class ContextInitializer implements BehatContextInitializer
             $application = $this->factory->createApplication($container);
             $this->kernel->setApplication($application);
 
-            $client = new HttpKernelBrowser($this->kernel);
-            $driver = new BrowserKitDriver($client, $this->minkBasePath);
-            $session = new Session($driver);
-            $context->setMinkSession($session);
+            $context->setMinkSession(($this->minkSessionFactory)($this->kernel));
         }
     }
 }
