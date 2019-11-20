@@ -36,7 +36,6 @@ class Extension implements ExtensionInterface
         /** @var MinkExtension $minkExtension */
         $minkExtension = $extensionManager->getExtension('mink');
 
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
         if ($minkExtension !== null) {
             $minkExtension->registerDriverFactory(new PsrDriverFactory());
         }
