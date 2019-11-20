@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Acpr\Behat\Psr\FeatureContexts;
 
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
+use Acpr\Behat\Psr\Context\RuntimeMinkContext;
 use Behat\Mink\Session;
 use Behat\MinkExtension\Context\MinkContext;
 use Psr\Container\ContainerInterface;
@@ -15,32 +16,16 @@ use Zend\Expressive\Application;
 
 class FeatureContext extends MinkContext implements Psr11MinkAwareContext
 {
+    use RuntimeMinkContext;
+
     /**
      * @var ContainerInterface
      */
     private $container;
-    /**
-     * @var Session
-     */
-    private $minkSession;
 
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
-    }
-
-    public function setMinkSession(Session $session): void
-    {
-        $this->minkSession = $session;
-    }
-
-    /**
-     * @BeforeScenario
-     */
-    public function configureMinkSession()
-    {
-        $this->getMink()->registerSession('psr', $this->minkSession);
-        $this->getMink()->resetSessions();
     }
 
     /**
