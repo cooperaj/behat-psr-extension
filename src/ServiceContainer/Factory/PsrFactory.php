@@ -35,7 +35,7 @@ class PsrFactory
      * @param ContainerInterface|null $container
      * @return RequestHandlerInterface
      */
-    public function createApplication(?ContainerInterface $container = null): RequestHandlerInterface
+    public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
     {
         /** @psalm-suppress UnresolvableInclude */
         $application = require $this->applicationFilePath;
