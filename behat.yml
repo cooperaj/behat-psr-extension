@@ -1,0 +1,15 @@
+default:
+
+  suites:
+    web:
+      contexts:
+        - Acpr\Behat\Expressive\FeatureContexts\FeatureContext
+
+  extensions:
+    Behat\MinkExtension:
+      base_url:  'http://localhost'
+      psr: ~
+
+    Acpr\Behat\Expressive\ServiceContainer\Extension:
+      application: "%paths.base%/features/bootstrap/app.php"
+      container: "%paths.base%/features/bootstrap/container.php"

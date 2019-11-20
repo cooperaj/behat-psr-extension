@@ -1,0 +1,42 @@
+services:
+
+  acpr.behat.expressive.context.initializer:
+    class: Acpr\Behat\Expressive\Context\Initializer\ContextInitializer
+    arguments:
+      - "@acpr.behat.expressive.factory"
+      - "@acpr.behat.expressive.kernel"
+      - '%mink.base_url%'
+    tags:
+      - { name: context.initializer }
+
+  acpr.behat.expressive.client:
+    class: Symfony\Component\HttpKernel\HttpKernelBrowser
+    arguments: [ "@acpr.behat.expressive.kernel" ]
+
+  acpr.behat.expressive.kernel:
+    class: Acpr\Behat\Expressive\RuntimeConfigurableTranslatorKernel
+    shared: false
+    arguments:
+      - "@acpr.behat.expressive.translator"
+
+  acpr.behat.expressive.translator:
+    class: Acpr\Behat\Expressive\SymfonyPsrTranslator
+    arguments:
+      - "@acpr.behat.expressive.translator.httpfoundationfactory"
+      - "@acpr.behat.expressive.translator.psrhttpfactory"
+
+  acpr.behat.expressive.translator.httpfoundationfactory:
+    class: Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory
+
+  acpr.behat.expressive.translator.psrhttpfactory:
+    class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
+    arguments:
+      - "@Zend\\Diactoros\\ServerRequestFactory"
+      - "@Zend\\Diactoros\\StreamFactory"
+      - "@Zend\\Diactoros\\UploadedFileFactory"
+      - "@Zend\\Diactoros\\ResponseFactory"
+
+  Zend\Diactoros\ServerRequestFactory: ~
+  Zend\Diactoros\StreamFactory: ~
+  Zend\Diactoros\UploadedFileFactory: ~
+  Zend\Diactoros\ResponseFactory: ~
