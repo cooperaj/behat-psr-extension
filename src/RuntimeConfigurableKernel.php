@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive;
+namespace Acpr\Behat\Psr;
 
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

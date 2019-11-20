@@ -1,6 +1,6 @@
 {
-  "name": "cooperaj/behat-expressive-extension",
-  "description": "Provides a bootstrapped Zend Expressive application to your behat contexts",
+  "name": "cooperaj/behat-psr-extension",
+  "description": "Provides a bootstrapped PSR7 application and PSR11 container to your behat contexts",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
@@ -21,8 +21,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Acpr\\Behat\\Expressive\\": "src/",
-      "Acpr\\Behat\\Expressive\\FeatureContexts\\": "features/contexts/"
+      "Acpr\\Behat\\Psr\\": "src/",
+      "Acpr\\Behat\\Psr\\FeatureContexts\\": "features/contexts/"
     }
   },
   "autoload-dev": {

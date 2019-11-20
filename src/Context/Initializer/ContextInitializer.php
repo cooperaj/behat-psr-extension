@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\Context\Initializer;
+namespace Acpr\Behat\Psr\Context\Initializer;
 
-use Acpr\Behat\Expressive\Context\Psr11AwareContext;
-use Acpr\Behat\Expressive\Context\Psr11MinkAwareContext;
-use Acpr\Behat\Expressive\RuntimeConfigurableKernel;
-use Acpr\Behat\Expressive\ServiceContainer\Factory\ZendExpressiveFactory;
+use Acpr\Behat\Psr\Context\Psr11AwareContext;
+use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
+use Acpr\Behat\Psr\RuntimeConfigurableKernel;
+use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
 use Behat\Mink\Driver\BrowserKitDriver;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 class ContextInitializer implements BehatContextInitializer
 {
     /**
-     * @var ZendExpressiveFactory
+     * @var PsrFactory
      */
     private $factory;
     /**
@@ -29,7 +29,7 @@ class ContextInitializer implements BehatContextInitializer
      */
     private $kernel;
 
-    public function __construct(ZendExpressiveFactory $factory, RuntimeConfigurableKernel $kernel, string $minkBasePath)
+    public function __construct(PsrFactory $factory, RuntimeConfigurableKernel $kernel, string $minkBasePath)
     {
         $this->factory = $factory;
         $this->kernel = $kernel;

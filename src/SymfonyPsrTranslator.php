@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive;
+namespace Acpr\Behat\Psr;
 
 use Psr\Http\Message\ResponseInterface as PsrResponse;
 use Psr\Http\Message\ServerRequestInterface as PsrRequest;

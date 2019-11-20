@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\Context;
+namespace Acpr\Behat\Psr\Context;
 
 use Psr\Container\ContainerInterface;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\FeatureContexts;
+namespace Acpr\Behat\Psr\FeatureContexts;
 
-use Acpr\Behat\Expressive\Context\Psr11MinkAwareContext;
+use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Behat\Mink\Session;
 use Behat\MinkExtension\Context\MinkContext;
 use Psr\Container\ContainerInterface;
@@ -44,9 +44,9 @@ class FeatureContext extends MinkContext implements Psr11MinkAwareContext
     }
 
     /**
-     * @When I go to the injected url :name
+     * @When I go to the injected url
      */
-    public function iGoToTheInjectedUrl($arg1)
+    public function iGoToTheInjectedUrl()
     {
         $app = $this->container->get(Application::class);
         $app->get('/injection',

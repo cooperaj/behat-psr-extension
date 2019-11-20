@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\ServiceContainer\Factory;
+namespace Acpr\Behat\Psr\ServiceContainer\Factory;
 
 use Behat\Mink\Driver\BrowserKitDriver;
 use Behat\MinkExtension\ServiceContainer\Driver\DriverFactory;
@@ -43,7 +43,7 @@ final class PsrDriverFactory implements DriverFactory
         return new Definition(
             BrowserKitDriver::class,
             [
-                new Reference('acpr.behat.expressive.client'),
+                new Reference('acpr.behat.psr.client'),
                 '%mink.base_url%'
             ]
         );

@@ -1,34 +1,34 @@
 services:
 
-  acpr.behat.expressive.context.initializer:
-    class: Acpr\Behat\Expressive\Context\Initializer\ContextInitializer
+  acpr.behat.psr.context.initializer:
+    class: Acpr\Behat\Psr\Context\Initializer\ContextInitializer
     arguments:
-      - "@acpr.behat.expressive.factory"
-      - "@acpr.behat.expressive.kernel"
+      - "@acpr.behat.psr.factory"
+      - "@acpr.behat.psr.kernel"
       - '%mink.base_url%'
     tags:
       - { name: context.initializer }
 
-  acpr.behat.expressive.client:
+  acpr.behat.psr.client:
     class: Symfony\Component\HttpKernel\HttpKernelBrowser
-    arguments: [ "@acpr.behat.expressive.kernel" ]
+    arguments: [ "@acpr.behat.psr.kernel" ]
 
-  acpr.behat.expressive.kernel:
-    class: Acpr\Behat\Expressive\RuntimeConfigurableTranslatorKernel
+  acpr.behat.psr.kernel:
+    class: Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel
     shared: false
     arguments:
-      - "@acpr.behat.expressive.translator"
+      - "@acpr.behat.psr.translator"
 
-  acpr.behat.expressive.translator:
-    class: Acpr\Behat\Expressive\SymfonyPsrTranslator
+  acpr.behat.psr.translator:
+    class: Acpr\Behat\Psr\SymfonyPsrTranslator
     arguments:
-      - "@acpr.behat.expressive.translator.httpfoundationfactory"
-      - "@acpr.behat.expressive.translator.psrhttpfactory"
+      - "@acpr.behat.psr.translator.httpfoundationfactory"
+      - "@acpr.behat.psr.translator.psrhttpfactory"
 
-  acpr.behat.expressive.translator.httpfoundationfactory:
+  acpr.behat.psr.translator.httpfoundationfactory:
     class: Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory
 
-  acpr.behat.expressive.translator.psrhttpfactory:
+  acpr.behat.psr.translator.psrhttpfactory:
     class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
     arguments:
       - "@Zend\\Diactoros\\ServerRequestFactory"

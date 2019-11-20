@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TestAcpr\Behat\Expressive;
+namespace TestAcpr\Behat\Psr;
 
-use Acpr\Behat\Expressive\RuntimeConfigurableKernel;
-use Acpr\Behat\Expressive\RuntimeConfigurableTranslatorKernel;
-use Acpr\Behat\Expressive\SymfonyPsrTranslator;
+use Acpr\Behat\Psr\RuntimeConfigurableKernel;
+use Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel;
+use Acpr\Behat\Psr\SymfonyPsrTranslator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;

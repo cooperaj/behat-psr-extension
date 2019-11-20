@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\ServiceContainer;
+namespace Acpr\Behat\Psr\ServiceContainer;
 
-use Acpr\Behat\Expressive\ServiceContainer\Factory\ZendExpressiveFactory;
-use Acpr\Behat\Expressive\ServiceContainer\Factory\PsrDriverFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\PsrDriverFactory;
 use Behat\MinkExtension\ServiceContainer\MinkExtension;
 use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
@@ -72,46 +72,51 @@ class Extension implements ExtensionInterface
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.yml');
 
-        $container->setParameter('acpr.behat.expressive.container.file', $config[ 'container' ]);
-        $container->setParameter('acpr.behat.expressive.application.file', $config[ 'application' ]);
+        $container->setParameter('acpr.behat.psr.container.file', $config[ 'container' ]);
+        $container->setParameter('acpr.behat.psr.application.file', $config[ 'application' ]);
 
-        $this->loadApplicationFactory($container);
-        $this->loadExpressiveContainer($container);
-        $this->loadExpressiveApplication($container);
+        $this->loadPsrFactory($container);
+        $this->loadPsrContainer($container);
+        $this->loadPsrApplication($container);
+        $this->loadContextInitializer($container);
     }
 
     /**
      * @param ContainerBuilder $container
      */
-    public function loadApplicationFactory(ContainerBuilder $container): void
+    public function loadPsrFactory(ContainerBuilder $container): void
     {
-        $expressiveApplicationFactory = new Definition(ZendExpressiveFactory::class, [
-            '%acpr.behat.expressive.container.file%',
-            '%acpr.behat.expressive.application.file%'
+        $expressiveApplicationFactory = new Definition(PsrFactory::class, [
+            '%acpr.behat.psr.container.file%',
+            '%acpr.behat.psr.application.file%'
         ]);
         $expressiveApplicationFactory->setShared(true);
-        $container->setDefinition('acpr.behat.expressive.factory', $expressiveApplicationFactory);
+        $container->setDefinition('acpr.behat.psr.factory', $expressiveApplicationFactory);
     }
 
     /**
      * @param ContainerBuilder $container
      */
-    public function loadExpressiveContainer(ContainerBuilder $container): void
+    private function loadPsrContainer(ContainerBuilder $container): void
     {
         $expressiveContainer = new Definition(ContainerInterface::class);
-        $expressiveContainer->setFactory([new Reference('acpr.behat.expressive.factory'), 'createContainer']);
-        $container->setDefinition('acpr.behat.expressive.container', $expressiveContainer);
+        $expressiveContainer->setFactory([new Reference('acpr.behat.psr.factory'), 'createContainer']);
+        $container->setDefinition('acpr.behat.psr.container', $expressiveContainer);
     }
 
     /**
      * @param ContainerBuilder $container
      */
-    public function loadExpressiveApplication(ContainerBuilder $container): void
+    private function loadPsrApplication(ContainerBuilder $container): void
     {
         $expressiveApp = new Definition(Application::class, [
-            new Reference('acpr.behat.expressive.container')
+            new Reference('acpr.behat.psr.container')
         ]);
-        $expressiveApp->setFactory([new Reference('acpr.behat.expressive.factory'), 'createApplication']);
-        $container->setDefinition('acpr.behat.expressive.application', $expressiveApp);
+        $expressiveApp->setFactory([new Reference('acpr.behat.psr.factory'), 'createApplication']);
+        $container->setDefinition('acpr.behat.psr.application', $expressiveApp);
+    }
+
+    private function loadContextInitializer(ContainerBuilder $container)
+    {
     }
 }

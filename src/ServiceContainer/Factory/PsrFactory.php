@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Acpr\Behat\Expressive\ServiceContainer\Factory;
+namespace Acpr\Behat\Psr\ServiceContainer\Factory;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ZendExpressiveFactory
+class PsrFactory
 {
     /**
      * @var string
