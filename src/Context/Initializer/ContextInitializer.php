@@ -52,6 +52,7 @@ class ContextInitializer implements BehatContextInitializer
             $application = $this->factory->createApplication($container);
             $this->kernel->setApplication($application);
 
+            /** @psalm-suppress PossiblyNullArgument */
             $context->setContainer($container);
             $context->setMinkSession(($this->minkSessionFactory)($this->kernel));
         }
