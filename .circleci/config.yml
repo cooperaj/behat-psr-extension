@@ -28,5 +28,8 @@ jobs:
             - ./vendor
 
       - run: ./vendor/bin/phpunit
-      - run: ./vendor/bin/behat
+      - run: ./vendor/bin/behat -f progress -o std -f junit -o test-results/behat
       - run: ./vendor/bin/psalm --show-info=false
+
+      - store_test_results:
+          path: test-results
