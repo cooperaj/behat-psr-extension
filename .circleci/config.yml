@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.1-node-browsers
+      - image: circleci/php:7.2-node-browsers
 
     steps:
       - checkout
@@ -17,13 +17,13 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "composer.lock" }}
+            - v1-dependencies-{{ checksum "composer.json" }}
             - v1-dependencies-
 
       - run: composer install -n --prefer-dist
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.lock" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
 
