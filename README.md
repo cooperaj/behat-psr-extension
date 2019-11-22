@@ -9,7 +9,8 @@ application instances at test time.
 
 For instance, you may want to isolate outgoing HTTP calls from Guzzle and mock the responses of those.
 
-##How to
+## How to
+
 For details of using this extension with Mink you can take a look at the included 
 [FeatureContext.php](features/contexts/FeatureContext.php)
 
