@@ -32,6 +32,12 @@ class SymfonyPsrTranslator
         $this->psrFactory = $psrFactory;
     }
 
+    /**
+     * Takes a Symfony Http request and returns a Psr request
+     *
+     * @param HttpFoundationRequest $request
+     * @return PsrRequest
+     */
     public function translateRequest(HttpFoundationRequest $request): PsrRequest
     {
         $psrRequest = $this->psrFactory->createRequest($request);
@@ -44,11 +50,19 @@ class SymfonyPsrTranslator
          * we should populate that manually.
          */
         $cookies = HeaderUtils::toString($request->cookies->all(), '; ');
-        $psrRequest = $psrRequest->withHeader('cookie', $cookies);
+        if ($cookies !== '') {
+            $psrRequest = $psrRequest->withHeader('cookie', $cookies);
+        }
 
         return $psrRequest;
     }
 
+    /**
+     * Take a Psr conformant response and return a Symfony response
+     *
+     * @param PsrResponse $response
+     * @return HttpFoundationResponse
+     */
     public function translateResponse(PsrResponse $response): HttpFoundationResponse
     {
         return $this->symfonyFactory->createResponse($response);
