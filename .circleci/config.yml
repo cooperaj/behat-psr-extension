@@ -3,11 +3,14 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
+
+orbs:
+  codecov: codecov/codecov@1.0.5
+
 jobs:
   build:
     docker:
-      # Specify the version you desire here
-      - image: circleci/php:7.2-node-browsers
+      - image: circleci/php:7.1-browsers
 
     steps:
       - checkout
@@ -33,3 +36,6 @@ jobs:
 
       - store_test_results:
           path: test-results
+
+      - codecov/upload:
+          file: test-results/phpunit/coverage.xml
