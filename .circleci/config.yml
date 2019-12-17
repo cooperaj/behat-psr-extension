@@ -33,5 +33,6 @@ jobs:
       - store_test_results:
           path: test-results
 
+      # CODECOV_TOKEN defined in project configuration
       - codecov/upload:
           file: test-results/phpunit/coverage.xml
