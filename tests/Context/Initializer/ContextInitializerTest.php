@@ -10,7 +10,6 @@ use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
-use Behat\Behat\Context\Context;
 use Behat\Mink\Session as MinkSession;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -40,7 +39,7 @@ class ContextInitializerTest extends TestCase
      */
     private $runtimeConfigurableKernelProphecy;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->psrFactoryProphecy = $this->prophesize(PsrFactory::class);
         $this->minkSessionFactoryProphecy = $this->prophesize(MinkSessionFactory::class);
@@ -52,7 +51,7 @@ class ContextInitializerTest extends TestCase
      * @covers ::__construct
      * @covers ::initializeContext
      */
-    public function it_correctly_initializes_a_psr11_context()
+    public function it_correctly_initializes_a_psr11_context(): void
     {
         $containerProphecy = $this->prophesize(ContainerInterface::class);
 
@@ -77,7 +76,7 @@ class ContextInitializerTest extends TestCase
      * @covers ::__construct
      * @covers ::initializeContext
      */
-    public function it_correctly_initializes_a_psr11_mink_aware_context()
+    public function it_correctly_initializes_a_psr11_mink_aware_context(): void
     {
         $applicationProphecy = $this->prophesize(RequestHandlerInterface::class);
         $containerProphecy = $this->prophesize(ContainerInterface::class);

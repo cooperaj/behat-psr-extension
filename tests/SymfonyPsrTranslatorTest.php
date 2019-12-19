@@ -24,7 +24,7 @@ class SymfonyPsrTranslatorTest extends TestCase
      * @covers ::__construct
      * @covers ::translateRequest
      */
-    public function given_a_symfony_request_returns_a_psr_one()
+    public function given_a_symfony_request_returns_a_psr_one(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);
@@ -52,7 +52,7 @@ class SymfonyPsrTranslatorTest extends TestCase
      * @covers ::__construct
      * @covers ::translateRequest
      */
-    public function given_a_symfony_request_returns_a_psr_one_with_cookie_header()
+    public function given_a_symfony_request_returns_a_psr_one_with_cookie_header(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);
@@ -84,7 +84,7 @@ class SymfonyPsrTranslatorTest extends TestCase
      * @covers ::__construct
      * @covers ::translateResponse
      */
-    public function given_a_psr_response_returns_a_symfony_one()
+    public function given_a_psr_response_returns_a_symfony_one(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);
