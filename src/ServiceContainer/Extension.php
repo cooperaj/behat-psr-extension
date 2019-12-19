@@ -33,7 +33,7 @@ class Extension implements ExtensionInterface
      */
     public function initialize(ExtensionManager $extensionManager): void
     {
-        /** @var MinkExtension $minkExtension */
+        /** @var ?MinkExtension $minkExtension */
         $minkExtension = $extensionManager->getExtension('mink');
 
         if ($minkExtension !== null) {
