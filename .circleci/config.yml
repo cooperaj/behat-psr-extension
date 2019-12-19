@@ -3,11 +3,9 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
 
-jobs:
-  build:
-    docker:
-      - image: circleci/php:7.1-browsers
-
+commands:
+  build_test:
+    description: Install dependencies and run tests
     steps:
       - checkout
 
@@ -36,3 +34,30 @@ jobs:
       # CODECOV_TOKEN defined in project configuration
       - codecov/upload:
           file: test-results/phpunit/coverage.xml
+
+jobs:
+  build_test_72:
+    docker:
+      - image: circleci/php:7.2-cli
+    steps:
+      - build_test
+
+  build_test_73:
+    docker:
+      - image: circleci/php:7.3-cli
+    steps:
+      - build_test
+
+  build_test_74:
+    docker:
+      - image: circleci/php:7.4-cli
+    steps:
+      - build_test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_test_72
+      - build_test_73
+      - build_test_74
