@@ -57,9 +57,10 @@ jobs:
   upload_codecov:
     docker:
       - image: buildpack-deps:trusty
-    attach_workspace:
-      at: /tmp/workspace
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
+
       # CODECOV_TOKEN defined in project configuration
       - codecov/upload:
           file: /tmp/workspace/test-results/phpunit/coverage.xml
