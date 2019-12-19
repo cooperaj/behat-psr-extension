@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Acpr\Behat\Psr\ServiceContainer;
 
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrDriverFactory;
+use Behat\MinkExtension\ServiceContainer\MinkExtension;
 use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -32,7 +33,7 @@ class Extension implements ExtensionInterface
      */
     public function initialize(ExtensionManager $extensionManager): void
     {
-        /** @var ?MinkExtension $minkExtension */
+        /** @var MinkExtension|null $minkExtension */
         $minkExtension = $extensionManager->getExtension('mink');
 
         if ($minkExtension !== null) {
