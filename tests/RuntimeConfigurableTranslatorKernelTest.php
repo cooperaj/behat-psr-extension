@@ -15,9 +15,19 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class RuntimeConfigurableTranslatorKernelTest
+ *
+ * @package TestAcpr\Behat\Psr
+ * @coversDefaultClass  \Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel
+ */
 class RuntimeConfigurableTranslatorKernelTest extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::handle
+     */
     public function handles_correctly_when_created_with_application()
     {
         $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
@@ -41,7 +51,12 @@ class RuntimeConfigurableTranslatorKernelTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::setApplication
+     * @covers ::handle
+     */
     public function handles_correctly_when_initialized_with_application()
     {
         $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
@@ -67,7 +82,11 @@ class RuntimeConfigurableTranslatorKernelTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::handle
+     */
     public function throws_exception_when_not_initialized_with_application()
     {
         $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
