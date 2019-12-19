@@ -31,10 +31,6 @@ commands:
       - store_test_results:
           path: test-results
 
-      # CODECOV_TOKEN defined in project configuration
-      - codecov/upload:
-          file: test-results/phpunit/coverage.xml
-
 jobs:
   build_test_72:
     docker:
@@ -53,6 +49,20 @@ jobs:
       - image: circleci/php:7.4-cli
     steps:
       - build_test
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - test-results/phpunit/coverage.xml
+
+  upload_codecov:
+    docker:
+      - image: buildpack-deps:trusty
+    attach_workspace:
+      at: /tmp/workspace
+    steps:
+      # CODECOV_TOKEN defined in project configuration
+      - codecov/upload:
+          file: /tmp/workspace/test-results/phpunit/coverage.xml
 
 workflows:
   version: 2
@@ -61,3 +71,8 @@ workflows:
       - build_test_72
       - build_test_73
       - build_test_74
+      - upload_codecov:
+          requires:
+            - build_test_72
+            - build_test_73
+            - build_test_74
