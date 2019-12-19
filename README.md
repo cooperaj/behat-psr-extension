@@ -2,6 +2,8 @@ Behat PSR Extension
 ==========
 
 [![CircleCI](https://circleci.com/gh/cooperaj/behat-psr-extension.svg?style=svg)](https://circleci.com/gh/cooperaj/behat-psr-extension)
+[![codecov](https://codecov.io/gh/cooperaj/behat-psr-extension/branch/master/graph/badge.svg)](https://codecov.io/gh/cooperaj/behat-psr-extension)
+
 
 This [Behat](http://behat.org) extension allows you to more easily test your PSR7/11/15 applications and gives you the 
 ability to isolate your application components at service boundries by injecting mocks/dummies/stubs into your running 

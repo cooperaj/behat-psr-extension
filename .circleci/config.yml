@@ -9,8 +9,6 @@ commands:
     steps:
       - checkout
 
-      - run: sudo apt update
-
       # Download and cache dependencies
       - restore_cache:
           keys:
