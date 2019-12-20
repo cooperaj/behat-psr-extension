@@ -57,6 +57,8 @@ jobs:
     docker:
       - image: buildpack-deps:trusty
     steps:
+      - checkout
+      
       - attach_workspace:
           at: /tmp/workspace
 
