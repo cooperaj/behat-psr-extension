@@ -51,6 +51,7 @@ jobs:
           root: /home/circleci/project
           paths:
             - test-results/phpunit/coverage.xml
+            - test-results/phpunit/results.xml
 
   upload_codecov:
     docker:
