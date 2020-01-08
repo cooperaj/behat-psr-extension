@@ -11,10 +11,20 @@ use Symfony\Bridge\PsrHttpMessage\{HttpFoundationFactoryInterface, HttpMessageFa
 use Symfony\Component\HttpFoundation\{Request as SymfonyRequest, Response as SymfonyResponse};
 use Zend\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
 
+/**
+ * Class SymfonyPsrTranslatorTest
+ *
+ * @package TestAcpr\Behat\Psr
+ * @coversDefaultClass  \Acpr\Behat\Psr\SymfonyPsrTranslator
+ */
 class SymfonyPsrTranslatorTest extends TestCase
 {
-    /** @test */
-    public function given_a_symfony_request_returns_a_psr_one()
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::translateRequest
+     */
+    public function given_a_symfony_request_returns_a_psr_one(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);
@@ -37,8 +47,12 @@ class SymfonyPsrTranslatorTest extends TestCase
         $this->assertArrayNotHasKey('cookie', $translatedRequest->getHeaders());
     }
 
-    /** @test */
-    public function given_a_symfony_request_returns_a_psr_one_with_cookie_header()
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::translateRequest
+     */
+    public function given_a_symfony_request_returns_a_psr_one_with_cookie_header(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);
@@ -65,8 +79,12 @@ class SymfonyPsrTranslatorTest extends TestCase
         $this->assertStringContainsString('testcookie-value', $translatedRequest->getHeaderLine('cookie'));
     }
 
-    /** @test */
-    public function given_a_psr_response_returns_a_symfony_one()
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::translateResponse
+     */
+    public function given_a_psr_response_returns_a_symfony_one(): void
     {
         $psrFactoryProphecy = $this->prophesize(HttpMessageFactoryInterface::class);
         $symfonyFactoryProphecy = $this->prophesize(HttpFoundationFactoryInterface::class);

@@ -11,10 +11,6 @@ use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
-use Behat\Mink\Driver\BrowserKitDriver;
-use Behat\Mink\Session;
-use Psr\Container\ContainerInterface;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class ContextInitializer implements BehatContextInitializer
 {

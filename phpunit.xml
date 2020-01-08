@@ -22,5 +22,6 @@
 
     <logging>
         <log type="junit" target="test-results/phpunit/results.xml"/>
+        <log type="coverage-clover" target="test-results/phpunit/coverage.xml"/>
     </logging>
 </phpunit>

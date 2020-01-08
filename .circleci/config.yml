@@ -1,18 +1,13 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
-version: 2
-jobs:
-  build:
-    docker:
-      # Specify the version you desire here
-      - image: circleci/php:7.2-node-browsers
+version: 2.1
 
+orbs:
+  codecov: codecov/codecov@1.0.5
+
+commands:
+  build_test:
+    description: Install dependencies and run tests
     steps:
       - checkout
-
-      - run: sudo apt update
 
       # Download and cache dependencies
       - restore_cache:
@@ -33,3 +28,57 @@ jobs:
 
       - store_test_results:
           path: test-results
+
+jobs:
+  build_test_72:
+    docker:
+      - image: circleci/php:7.2-cli
+    steps:
+      - build_test
+
+  build_test_73:
+    docker:
+      - image: circleci/php:7.3-cli
+    steps:
+      - build_test
+
+  build_test_74:
+    docker:
+      - image: circleci/php:7.4-cli
+    steps:
+      - build_test
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - test-results/phpunit/coverage.xml
+            - test-results/phpunit/results.xml
+
+  upload_codecov:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      
+      - attach_workspace:
+          at: /tmp/workspace
+
+      # CODECOV_TOKEN defined in project configuration
+      - codecov/upload:
+          file: /tmp/workspace/test-results/phpunit/coverage.xml
+
+      - store_artifacts:
+          path: /tmp/workspace/test-results/phpunit/
+          destination: test-results
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_test_72
+      - build_test_73
+      - build_test_74
+      - upload_codecov:
+          requires:
+            - build_test_72
+            - build_test_73
+            - build_test_74
