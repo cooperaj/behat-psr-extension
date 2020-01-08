@@ -42,6 +42,14 @@ class ContextInitializer implements BehatContextInitializer
         $container = $this->factory->createContainer();
         $application = $this->factory->createApplication($container);
 
+        if ($container === null) {
+            throw new \RuntimeException(
+                'It appears you are using your own Application/Container factory and have not appropriately ' .
+                'created either the ContainerInterface or RequestHandlerInterface required for this extension to ' .
+                'function.'
+            );
+        }
+
         if ($context instanceof Psr11AwareContext || $context instanceof Psr11MinkAwareContext) {
             $context->setContainer($container);
         }
