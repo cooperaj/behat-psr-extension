@@ -7,7 +7,7 @@ namespace Acpr\Behat\Psr\ServiceContainer\Factory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class PsrFactory
+class PsrFactory implements PsrFactoryInterface
 {
     /**
      * @var string
@@ -25,15 +25,7 @@ class PsrFactory
     }
 
     /**
-     * Using the path to a file responsible for creating a PSR7 application
-     * will return that application.
-     *
-     * Depending on your application a PSR11 container can be made available as $container
-     *
-     * @example features/bootstrap/app.php
-     *
-     * @param ContainerInterface|null $container
-     * @return RequestHandlerInterface
+     * @inheritDoc
      */
     public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
     {
@@ -44,16 +36,15 @@ class PsrFactory
             throw new \InvalidArgumentException('Loaded application is not a valid PSR7 application');
         }
 
+        if ($container === null) {
+            throw new \RuntimeException('A valid PSR11 ContainerInterface has not been created as a part of the application creation');
+        }
+
         return $application;
     }
 
     /**
-     * Using the path to a file responsible for creating a PSR11 container
-     * will return that container.
-     *
-     * @example features/bootstrap/container.php
-     *
-     * @return ContainerInterface
+     * @inheritDoc
      */
     public function createContainer(): ContainerInterface
     {
