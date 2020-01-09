@@ -14,6 +14,7 @@ use Behat\Mink\Session as MinkSession;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
@@ -54,9 +55,12 @@ class ContextInitializerTest extends TestCase
     public function it_correctly_initializes_a_psr11_context(): void
     {
         $containerProphecy = $this->prophesize(ContainerInterface::class);
+        $applicationProphecy = $this->prophesize(RequestHandlerInterface::class);
 
         $this->psrFactoryProphecy->createContainer()
             ->willReturn($containerProphecy->reveal());
+        $this->psrFactoryProphecy->createApplication($containerProphecy->reveal())
+            ->willReturn($applicationProphecy->reveal());
 
         $contextProphecy = $this->prophesize(Psr11AwareContext::class);
         $contextProphecy->setContainer($containerProphecy->reveal())
