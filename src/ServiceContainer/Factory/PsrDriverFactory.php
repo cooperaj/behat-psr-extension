@@ -30,6 +30,7 @@ final class PsrDriverFactory implements DriverFactory
 
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function configure(ArrayNodeDefinition $builder): void
     {
