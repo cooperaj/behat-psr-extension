@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\{HttpFoundationFactoryInterface, HttpMessageFactoryInterface};
 use Symfony\Component\HttpFoundation\{Request as SymfonyRequest, Response as SymfonyResponse};
-use Zend\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
+use Laminas\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
 
 /**
  * Class SymfonyPsrTranslatorTest

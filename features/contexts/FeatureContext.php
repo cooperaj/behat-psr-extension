@@ -6,13 +6,12 @@ namespace Acpr\Behat\Psr\FeatureContexts;
 
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\Context\RuntimeMinkContext;
-use Behat\Mink\Session;
 use Behat\MinkExtension\Context\MinkContext;
+use Laminas\Diactoros\Response;
+use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response;
-use Zend\Expressive\Application;
 
 class FeatureContext extends MinkContext implements Psr11MinkAwareContext
 {

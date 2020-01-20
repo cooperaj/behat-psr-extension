@@ -2,26 +2,23 @@
 
 declare(strict_types=1);
 
-/** @var \Zend\Expressive\Application $app */
-
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response;
 
-$app = $container->get(\Zend\Expressive\Application::class);
-$factory = $container->get(\Zend\Expressive\MiddlewareFactory::class);
+$app = $container->get(\Mezzio\Application::class);
+$factory = $container->get(\Mezzio\MiddlewareFactory::class);
 
 $app->get(
     '/',
     function (ServerRequestInterface $request): ResponseInterface {
-        $response = new Response();
+        $response = new \Laminas\Diactoros\Response();
         $response->getBody()->write('Hello ' . $request->getQueryParams()['name']);
 
         return $response;
     }
 );
 
-$app->pipe(Zend\Expressive\Router\Middleware\RouteMiddleware::class);
-$app->pipe(Zend\Expressive\Router\Middleware\DispatchMiddleware::class);
+$app->pipe(\Mezzio\Router\Middleware\RouteMiddleware::class);
+$app->pipe(\Mezzio\Router\Middleware\DispatchMiddleware::class);
 
 return $app;

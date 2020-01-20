@@ -40,12 +40,12 @@ services:
   Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: ~
   Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory:
     arguments:
-      - "@Zend\\Diactoros\\ServerRequestFactory"
-      - "@Zend\\Diactoros\\StreamFactory"
-      - "@Zend\\Diactoros\\UploadedFileFactory"
-      - "@Zend\\Diactoros\\ResponseFactory"
+      - "@Laminas\\Diactoros\\ServerRequestFactory"
+      - "@Laminas\\Diactoros\\StreamFactory"
+      - "@Laminas\\Diactoros\\UploadedFileFactory"
+      - "@Laminas\\Diactoros\\ResponseFactory"
 
-  Zend\Diactoros\ServerRequestFactory: ~
-  Zend\Diactoros\StreamFactory: ~
-  Zend\Diactoros\UploadedFileFactory: ~
-  Zend\Diactoros\ResponseFactory: ~
+  Laminas\Diactoros\ServerRequestFactory: ~
+  Laminas\Diactoros\StreamFactory: ~
+  Laminas\Diactoros\UploadedFileFactory: ~
+  Laminas\Diactoros\ResponseFactory: ~
