@@ -27,7 +27,7 @@ commands:
       - run: ./vendor/bin/psalm --show-info=false
 
       - store_test_results:
-          path: test-results
+          path: tests/output
 
 jobs:
   build_test_71:
@@ -73,7 +73,7 @@ jobs:
           file: /tmp/workspace/tests/output/phpunit/coverage.xml
 
       - store_artifacts:
-          path: /tmp/workspace/tests/output/phpunit/
+          path: /tmp/workspace/tests/output
           destination: test-results
 
 workflows:
