@@ -30,6 +30,12 @@ commands:
           path: test-results
 
 jobs:
+  build_test_71:
+    docker:
+      - image: circleci/php:7.1-cli
+    steps:
+      - build_test
+
   build_test_72:
     docker:
       - image: circleci/php:7.2-cli
@@ -58,7 +64,7 @@ jobs:
       - image: buildpack-deps:trusty
     steps:
       - checkout
-      
+
       - attach_workspace:
           at: /tmp/workspace
 
@@ -74,11 +80,13 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+      - build_test_71:
+          filters:
+            branches:
+              only: php71-compat
       - build_test_72
       - build_test_73
       - build_test_74
       - upload_codecov:
           requires:
-            - build_test_72
-            - build_test_73
             - build_test_74
