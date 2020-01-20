@@ -36,7 +36,7 @@ class PsrFactory implements PsrFactoryInterface
             throw new \InvalidArgumentException('Loaded application is not a valid PSR7 application');
         }
 
-        if ($container === null) {
+        if (!$container instanceof ContainerInterface) {
             throw new \RuntimeException('A valid PSR11 ContainerInterface has not been created as a part of the application creation');
         }
 

@@ -20,12 +20,12 @@
   "autoload": {
     "psr-4": {
       "Acpr\\Behat\\Psr\\": "src/",
-      "Acpr\\Behat\\Psr\\FeatureContexts\\": "features/contexts/"
+      "Acpr\\Behat\\Psr\\FeatureContexts\\": "tests/features/contexts/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "TestAcpr\\Behat\\Psr\\": "tests/"
+      "TestAcpr\\Behat\\Psr\\": "tests/unit"
     }
   },
   "require-dev": {

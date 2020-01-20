@@ -4,6 +4,8 @@ default:
     web:
       contexts:
         - Acpr\Behat\Psr\FeatureContexts\FeatureContext
+      paths:
+        - "%paths.base%/tests/features"
 
   extensions:
     Behat\MinkExtension:
@@ -11,5 +13,5 @@ default:
       psr: ~
 
     Acpr\Behat\Psr\ServiceContainer\Extension:
-      application: "%paths.base%/features/bootstrap/app.php"
-      container: "%paths.base%/features/bootstrap/container.php"
+      application: "%paths.base%/tests/stub/mezzio-app/app.php"
+      container: "%paths.base%/tests/stub/mezzio-app/container.php"

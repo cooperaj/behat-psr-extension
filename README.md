@@ -24,7 +24,7 @@ AWS requests as a part of your context steps definitions.
 ## How to
 
 For details of using this extension with Mink you can take a look at the included 
-[FeatureContext.php](features/contexts/FeatureContext.php)
+[FeatureContext.php](tests/features/contexts/FeatureContext.php)
 
 In essence:
 1. Implement either `Psr11AwareContext` or `Psr11MinkAwareContext` in your Behat context file.

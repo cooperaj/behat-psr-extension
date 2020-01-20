@@ -9,8 +9,8 @@
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true">
     <testsuites>
-        <testsuite name="default">
-            <directory suffix="Test.php">tests</directory>
+        <testsuite name="Unit tests">
+            <directory suffix="Test.php">tests/unit</directory>
         </testsuite>
     </testsuites>
 
@@ -21,7 +21,7 @@
     </filter>
 
     <logging>
-        <log type="junit" target="test-results/phpunit/results.xml"/>
-        <log type="coverage-clover" target="test-results/phpunit/coverage.xml"/>
+        <log type="junit" target="tests/output/phpunit/results.xml"/>
+        <log type="coverage-clover" target="tests/output/phpunit/coverage.xml"/>
     </logging>
 </phpunit>

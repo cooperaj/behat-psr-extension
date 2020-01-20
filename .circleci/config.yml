@@ -23,7 +23,7 @@ commands:
             - ./vendor
 
       - run: ./vendor/bin/phpunit
-      - run: ./vendor/bin/behat -f progress -o std -f junit -o test-results/behat
+      - run: ./vendor/bin/behat -f progress -o std -f junit -o tests/output/behat
       - run: ./vendor/bin/psalm --show-info=false
 
       - store_test_results:
@@ -56,8 +56,8 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
-            - test-results/phpunit/coverage.xml
-            - test-results/phpunit/results.xml
+            - tests/output/phpunit/coverage.xml
+            - tests/output/phpunit/results.xml
 
   upload_codecov:
     docker:
@@ -70,10 +70,10 @@ jobs:
 
       # CODECOV_TOKEN defined in project configuration
       - codecov/upload:
-          file: /tmp/workspace/test-results/phpunit/coverage.xml
+          file: /tmp/workspace/tests/output/phpunit/coverage.xml
 
       - store_artifacts:
-          path: /tmp/workspace/test-results/phpunit/
+          path: /tmp/workspace/tests/output/phpunit/
           destination: test-results
 
 workflows:
