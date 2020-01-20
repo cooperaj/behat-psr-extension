@@ -10,6 +10,7 @@ use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Mink\Session as MinkSession;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -41,7 +42,7 @@ class ContextInitializerTest extends TestCase
 
     public function setUp(): void
     {
-        $this->psrFactoryProphecy = $this->prophesize(PsrFactory::class);
+        $this->psrFactoryProphecy = $this->prophesize(PsrFactoryInterface::class);
         $this->minkSessionFactoryProphecy = $this->prophesize(MinkSessionFactory::class);
         $this->runtimeConfigurableKernelProphecy = $this->prophesize(RuntimeConfigurableKernel::class);
     }
@@ -109,6 +110,49 @@ class ContextInitializerTest extends TestCase
             $this->runtimeConfigurableKernelProphecy->reveal()
         );
 
+        $initializer->initializeContext($contextProphecy->reveal());
+    }
+
+    /**
+     * @test
+     * @covers ::__construct
+     * @covers ::initializeContext
+     *
+     * If a developer implements their own PsrFactory they could fulfill the interface but break code
+     * by setting the pass by reference $container to null or a non-ContainerInterface value.
+     */
+    public function it_detects_when_a_custom_factory_invalidates_a_container()
+    {
+        $containerProphecy = $this->prophesize(ContainerInterface::class);
+        $applicationProphecy = $this->prophesize(RequestHandlerInterface::class);
+        $contextProphecy = $this->prophesize(Psr11AwareContext::class);
+
+        $psrFactoryMock = new class($containerProphecy, $applicationProphecy) implements PsrFactoryInterface {
+            public function __construct(ObjectProphecy $containerProphecy, ObjectProphecy $applicationProphecy)
+            {
+                $this->containerProphecy = $containerProphecy;
+                $this->applicationProphecy = $applicationProphecy;
+            }
+
+            public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
+            {
+                $container = new \stdClass(); // why is this possible?
+                return $this->applicationProphecy->reveal();
+            }
+
+            public function createContainer(): ContainerInterface
+            {
+                return $this->containerProphecy->reveal();
+            }
+        };
+
+        $initializer = new ContextInitializer(
+            $psrFactoryMock,
+            $this->minkSessionFactoryProphecy->reveal(),
+            $this->runtimeConfigurableKernelProphecy->reveal()
+        );
+
+        $this->expectException(\RuntimeException::class);
         $initializer->initializeContext($contextProphecy->reveal());
     }
 }

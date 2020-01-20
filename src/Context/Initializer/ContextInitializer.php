@@ -8,14 +8,15 @@ use Acpr\Behat\Psr\Context\Psr11AwareContext;
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
-use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
+use Psr\Container\ContainerInterface;
 
 class ContextInitializer implements BehatContextInitializer
 {
     /**
-     * @var PsrFactory
+     * @var PsrFactoryInterface
      */
     private $factory;
     /**
@@ -28,7 +29,7 @@ class ContextInitializer implements BehatContextInitializer
     private $kernel;
 
     public function __construct(
-        PsrFactory $factory,
+        PsrFactoryInterface $factory,
         MinkSessionFactory $minkSessionFactory,
         RuntimeConfigurableKernel $kernel)
     {
@@ -42,11 +43,11 @@ class ContextInitializer implements BehatContextInitializer
         $container = $this->factory->createContainer();
         $application = $this->factory->createApplication($container);
 
-        if ($container === null) {
+        if (!$container instanceof ContainerInterface) {
             throw new \RuntimeException(
-                'It appears you are using your own Application/Container factory and have not appropriately ' .
-                'created either the ContainerInterface or RequestHandlerInterface required for this extension to ' .
-                'function.'
+                'It appears you are using your own Application/Container factory and have inappropriately ' .
+                'altered or invalidated the Container as a part of your Application initialisation. In all cases a' .
+                'PSR7 container must be available.'
             );
         }
 
