@@ -9,8 +9,6 @@ commands:
     steps:
       - checkout
 
-      - run: sudo apt update
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -31,14 +29,10 @@ commands:
       - store_test_results:
           path: test-results
 
-      # CODECOV_TOKEN defined in project configuration
-      - codecov/upload:
-          file: test-results/phpunit/coverage.xml
-
 jobs:
   build_test_71:
     docker:
-      - image: circleci/php:7.2-cli
+      - image: circleci/php:7.1-cli
     steps:
       - build_test
 
@@ -59,12 +53,40 @@ jobs:
       - image: circleci/php:7.4-cli
     steps:
       - build_test
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - test-results/phpunit/coverage.xml
+            - test-results/phpunit/results.xml
+
+  upload_codecov:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: /tmp/workspace
+
+      # CODECOV_TOKEN defined in project configuration
+      - codecov/upload:
+          file: /tmp/workspace/test-results/phpunit/coverage.xml
+
+      - store_artifacts:
+          path: /tmp/workspace/test-results/phpunit/
+          destination: test-results
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_test_71
+      - build_test_71:
+          filters:
+            branches:
+              only: php71-compat
       - build_test_72
       - build_test_73
       - build_test_74
+      - upload_codecov:
+          requires:
+            - build_test_74
