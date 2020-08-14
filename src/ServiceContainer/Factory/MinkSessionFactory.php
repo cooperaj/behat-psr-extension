@@ -18,6 +18,13 @@ class MinkSessionFactory
 
     public function __construct(string $minkBasePath)
     {
+        // until https://github.com/FriendsOfBehat/MinkBrowserKitDriver/pull/2 is fixed this is necessary
+        if (null === parse_url($minkBasePath, PHP_URL_PATH)) {
+            throw new \RuntimeException(
+                'The configured MinkExtension base url must end in a "/" to work successfully'
+            );
+        }
+
         $this->minkBasePath = $minkBasePath;
     }
 

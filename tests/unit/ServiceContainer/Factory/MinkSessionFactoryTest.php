@@ -24,11 +24,21 @@ class MinkSessionFactoryTest extends TestCase
     /**
      * @test
      * @covers ::__construct
+     */
+    public function it_thows_an_exception_if_the_path_isnt_right(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $factory = new MinkSessionFactory('http://localhost');
+    }
+
+    /**
+     * @test
+     * @covers ::__construct
      * @covers ::__invoke
      */
     public function it_creates_a_session_that_wraps_our_runtime_kernel()
     {
-        $factory = new MinkSessionFactory('http://localhost');
+        $factory = new MinkSessionFactory('http://localhost/');
 
         // because of protected properties the only way to test our kernel is used is to mock it and
         // see that things get called on it.
