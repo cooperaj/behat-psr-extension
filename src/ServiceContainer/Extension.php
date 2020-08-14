@@ -17,6 +17,7 @@ class Extension implements ExtensionInterface
 {
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function process(ContainerBuilder $container): void {}
 
@@ -43,6 +44,7 @@ class Extension implements ExtensionInterface
 
     /**
      * @inheritDoc
+     * @codeCoverageIgnore
      */
     public function configure(ArrayNodeDefinition $builder): void
     {
