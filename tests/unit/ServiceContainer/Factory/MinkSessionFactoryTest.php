@@ -28,7 +28,7 @@ class MinkSessionFactoryTest extends TestCase
      */
     public function it_creates_a_session_that_wraps_our_runtime_kernel()
     {
-        $factory = new MinkSessionFactory('http://localhost');
+        $factory = new MinkSessionFactory('http://localhost/');
 
         // because of protected properties the only way to test our kernel is used is to mock it and
         // see that things get called on it.
