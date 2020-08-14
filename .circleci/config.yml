@@ -29,6 +29,28 @@ commands:
       - store_test_results:
           path: tests/output
 
+  build_test_symfony4:
+    description: Install dependencies for Symfony4 and run tests
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-v4-{{ checksum "composer.json" }}
+            - v1-dependencies-v4-
+
+      - run: composer require -n --prefer-dist --prefer-lowest "symfony/http-foundation ^4.3||^5.1" "symfony/http-kernel ^4.3||^5.1"
+
+      - save_cache:
+          key: v1-dependencies-v4-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+
+      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/behat -f progress -o std
+      - run: ./vendor/bin/psalm --show-info=false --shepherd
+
 jobs:
   build_test_71:
     docker:
@@ -53,6 +75,7 @@ jobs:
       - image: circleci/php:7.4-cli
     steps:
       - build_test
+      - build_test_symfony4
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
