@@ -29,7 +29,10 @@ class PsrFactory implements PsrFactoryInterface
      */
     public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
     {
-        /** @psalm-suppress UnresolvableInclude */
+        /**
+         * @psalm-suppress UnresolvableInclude
+         * @var RequestHandlerInterface $application
+         */
         $application = require $this->applicationFilePath;
 
         if (!$application instanceof RequestHandlerInterface) {
@@ -48,7 +51,10 @@ class PsrFactory implements PsrFactoryInterface
      */
     public function createContainer(): ContainerInterface
     {
-        /** @psalm-suppress UnresolvableInclude */
+        /**
+         * @psalm-suppress UnresolvableInclude
+         * @var ContainerInterface $container
+         */
         $container = require $this->containerFilePath;
 
         if (!$container instanceof ContainerInterface) {

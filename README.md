@@ -1,8 +1,9 @@
 Behat PSR Extension
 ==========
 
-[![CircleCI](https://circleci.com/gh/cooperaj/behat-psr-extension.svg?style=svg)](https://circleci.com/gh/cooperaj/behat-psr-extension)
+[![CircleCI](https://circleci.com/gh/cooperaj/behat-psr-extension.svg?style=shield)](https://app.circleci.com/pipelines/github/cooperaj/behat-psr-extension)
 [![codecov](https://codecov.io/gh/cooperaj/behat-psr-extension/branch/master/graph/badge.svg)](https://codecov.io/gh/cooperaj/behat-psr-extension)
+[![psalm](https://shepherd.dev/github/cooperaj/behat-psr-extension/coverage.svg)](https://shepherd.dev/github/cooperaj/behat-psr-extension)
 
 This [Behat](http://behat.org) extension allows you to more easily test your [PSR7](https://www.php-fig.org/psr/psr-7/) 
 / [11](https://www.php-fig.org/psr/psr-11/) / [15](https://www.php-fig.org/psr/psr-15/) applications and gives you the 

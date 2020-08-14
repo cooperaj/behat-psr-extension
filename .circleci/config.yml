@@ -24,7 +24,7 @@ commands:
 
       - run: ./vendor/bin/phpunit
       - run: ./vendor/bin/behat -f progress -o std -f junit -o tests/output/behat
-      - run: ./vendor/bin/psalm --show-info=false
+      - run: ./vendor/bin/psalm --show-info=false --shepherd
 
       - store_test_results:
           path: tests/output

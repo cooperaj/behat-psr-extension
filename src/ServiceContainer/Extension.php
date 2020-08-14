@@ -49,6 +49,7 @@ class Extension implements ExtensionInterface
         /**
          * @psalm-suppress PossiblyNullReference
          * @psalm-suppress PossiblyUndefinedMethod
+         * @psalm-suppress MixedMethodCall
          */
         $builder
             ->children()
