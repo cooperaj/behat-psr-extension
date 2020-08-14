@@ -32,24 +32,11 @@ commands:
   build_test_symfony4:
     description: Install dependencies for Symfony4 and run tests
     steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-v4-{{ checksum "composer.json" }}
-            - v1-dependencies-v4-
-
       - run: composer require -n --prefer-dist --prefer-lowest "symfony/http-foundation ^4.3||^5.1" "symfony/http-kernel ^4.3||^5.1"
-
-      - save_cache:
-          key: v1-dependencies-v4-{{ checksum "composer.json" }}
-          paths:
-            - ./vendor
 
       - run: ./vendor/bin/phpunit
       - run: ./vendor/bin/behat -f progress -o std
-      - run: ./vendor/bin/psalm --show-info=false --shepherd
+      - run: ./vendor/bin/psalm --show-info=false
 
 jobs:
   build_test_71:
