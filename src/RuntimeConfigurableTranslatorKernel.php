@@ -39,6 +39,8 @@ final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, 
      * @param int $type
      * @param bool $catch
      * @return Response
+     *
+     * @psalm-suppress DeprecatedConstant
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
     {
