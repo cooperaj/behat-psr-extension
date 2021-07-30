@@ -63,6 +63,12 @@ jobs:
     steps:
       - build_test
       - build_test_symfony4
+
+  build_test_80:
+    docker:
+      - image: circleci/php:8.0-cli
+    steps:
+      - build_test
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -97,6 +103,7 @@ workflows:
       - build_test_72
       - build_test_73
       - build_test_74
+      - build_test_80
       - upload_codecov:
           requires:
-            - build_test_74
+            - build_test_80

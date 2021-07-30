@@ -69,7 +69,14 @@ class Extension implements ExtensionInterface
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.yml');
 
+        /**
+         * @psalm-suppress MixedArgument
+         */
         $container->setParameter('acpr.behat.psr.container.file', $config[ 'container' ]);
+
+        /**
+         * @psalm-suppress MixedArgument
+         */
         $container->setParameter('acpr.behat.psr.application.file', $config[ 'application' ]);
     }
 }
