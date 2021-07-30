@@ -31,7 +31,6 @@ class PsrFactory implements PsrFactoryInterface
     {
         /**
          * @psalm-suppress UnresolvableInclude
-         * @var RequestHandlerInterface $application
          */
         $application = require $this->applicationFilePath;
 
@@ -53,7 +52,6 @@ class PsrFactory implements PsrFactoryInterface
     {
         /**
          * @psalm-suppress UnresolvableInclude
-         * @var ContainerInterface $container
          */
         $container = require $this->containerFilePath;
 

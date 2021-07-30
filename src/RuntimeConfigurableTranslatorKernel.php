@@ -39,6 +39,9 @@ final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, 
      * @param int $type
      * @param bool $catch
      * @return Response
+     *
+     *
+     * @psalm-suppress DeprecatedConstant TODO remove when ongoing PHP 7 support is dropped
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
     {
