@@ -39,7 +39,7 @@ class MinkSessionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::__invoke
      */
-    public function it_creates_a_session_that_wraps_our_runtime_kernel()
+    public function it_creates_a_session_that_wraps_our_runtime_kernel(): void
     {
         $factory = new MinkSessionFactory('http://localhost/');
 

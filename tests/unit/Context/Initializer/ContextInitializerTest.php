@@ -124,7 +124,7 @@ class ContextInitializerTest extends TestCase
      * If a developer implements their own PsrFactory they could fulfill the interface but break code
      * by setting the pass by reference $container to null or a non-ContainerInterface value.
      */
-    public function it_detects_when_a_custom_factory_invalidates_a_container()
+    public function it_detects_when_a_custom_factory_invalidates_a_container(): void
     {
         $containerProphecy = $this->prophesize(ContainerInterface::class);
         $applicationProphecy = $this->prophesize(RequestHandlerInterface::class);
