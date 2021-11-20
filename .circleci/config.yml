@@ -104,8 +104,14 @@ workflows:
           filters:
             branches:
               only: php72-compat
-      - build_test_73
-      - build_test_74
+      - build_test_73:
+          filters:
+            branches:
+              only: php7x-compat
+      - build_test_74:
+          filters:
+            branches:
+              only: php7x-compat
       - build_test_80
       - upload_codecov:
           requires:

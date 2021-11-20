@@ -54,7 +54,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::createContainer
      */
-    public function create_a_container()
+    public function create_a_container(): void
     {
         $factory = $this->createMezzioFactory();
 
@@ -67,7 +67,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::createContainer
      */
-    public function throw_exception_if_container_creation_fails()
+    public function throw_exception_if_container_creation_fails(): void
     {
         $factory = $this->createBrokenFactory();
 
@@ -81,7 +81,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::createContainer
      * @covers ::createApplication
      */
-    public function create_an_application()
+    public function create_an_application(): void
     {
         $factory = $this->createMezzioFactory();
 
@@ -95,7 +95,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::createApplication
      */
-    public function create_an_application_without_a_supplied_container()
+    public function create_an_application_without_a_supplied_container(): void
     {
         $factory = $this->createEmbeddedFactory();
 
@@ -110,7 +110,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::createApplication
      */
-    public function throw_exception_if_application_creation_fails()
+    public function throw_exception_if_application_creation_fails(): void
     {
         $factory = $this->createBrokenFactory();
 
@@ -124,7 +124,7 @@ class PsrFactoryTest extends TestCase
      * @covers ::createContainer
      * @covers ::createApplication
      */
-    public function throw_expection_when_making_an_application_if_no_container_present_afterwards()
+    public function throw_expection_when_making_an_application_if_no_container_present_afterwards(): void
     {
         $factory = $this->createSubtlyBrokenFactory();
 

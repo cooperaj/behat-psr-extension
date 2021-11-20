@@ -10,10 +10,7 @@ use RuntimeException;
 
 trait RuntimeMinkContext
 {
-    /**
-     * @var MinkSession
-     */
-    private $minkSession;
+    private ?MinkSession $minkSession = null;
 
     public function setMinkSession(MinkSession $session): void
     {
@@ -23,9 +20,9 @@ trait RuntimeMinkContext
     /**
      * @BeforeScenario
      */
-    public function runtimeMinkSession()
+    public function runtimeMinkSession(): void
     {
-        if (!($this instanceof RawMinkContext)) {
+        if (! $this instanceof RawMinkContext) {
             throw new RuntimeException(
                 'The \Acpr\Behat\Psr\Context\RuntimeMinkContext trait can only be used by a context that ' .
                  'extends \Behat\MinkExtension\Context\RawMinkContext'

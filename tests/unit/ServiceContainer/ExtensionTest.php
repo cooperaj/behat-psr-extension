@@ -10,6 +10,7 @@ use Behat\MinkExtension\ServiceContainer\MinkExtension;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -22,6 +23,8 @@ use Symfony\Component\DependencyInjection\Definition;
  */
 class ExtensionTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      * @covers ::getConfigKey

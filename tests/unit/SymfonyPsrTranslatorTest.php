@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace TestAcpr\Behat\Psr;
 
 use Acpr\Behat\Psr\SymfonyPsrTranslator;
+use Laminas\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\{HttpFoundationFactoryInterface, HttpMessageFactoryInterface};
 use Symfony\Component\HttpFoundation\{Request as SymfonyRequest, Response as SymfonyResponse};
-use Laminas\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
 
 /**
  * Class SymfonyPsrTranslatorTest
@@ -19,6 +20,8 @@ use Laminas\Diactoros\{Response as PsrResponse, ServerRequest as PsrRequest};
  */
 class SymfonyPsrTranslatorTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      * @covers ::__construct

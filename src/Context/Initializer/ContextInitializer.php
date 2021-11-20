@@ -15,28 +15,11 @@ use Psr\Container\ContainerInterface;
 
 class ContextInitializer implements BehatContextInitializer
 {
-    /**
-     * @var PsrFactoryInterface
-     */
-    private $factory;
-    /**
-     * @var MinkSessionFactory
-     */
-    private $minkSessionFactory;
-    /**
-     * @var RuntimeConfigurableKernel
-     */
-    private $kernel;
-
     public function __construct(
-        PsrFactoryInterface $factory,
-        MinkSessionFactory $minkSessionFactory,
-        RuntimeConfigurableKernel $kernel)
-    {
-        $this->factory = $factory;
-        $this->minkSessionFactory = $minkSessionFactory;
-        $this->kernel = $kernel;
-    }
+        private PsrFactoryInterface $factory,
+        private MinkSessionFactory $minkSessionFactory,
+        private RuntimeConfigurableKernel $kernel,
+    ) {}
 
     public function initializeContext(Context $context): void
     {

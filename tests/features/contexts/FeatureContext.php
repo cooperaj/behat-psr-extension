@@ -9,9 +9,10 @@ use Acpr\Behat\Psr\Context\RuntimeMinkContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Laminas\Diactoros\Response;
 use Mezzio\Application;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 class FeatureContext extends MinkContext implements Psr11MinkAwareContext
 {
@@ -19,10 +20,7 @@ class FeatureContext extends MinkContext implements Psr11MinkAwareContext
     // have to use it in your contexts, but you do have to do what it does.
     use RuntimeMinkContext;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ?ContainerInterface $container = null;
 
     public function setContainer(ContainerInterface $container): void
     {
@@ -31,14 +29,18 @@ class FeatureContext extends MinkContext implements Psr11MinkAwareContext
 
     /**
      * @When I go to the injected url
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function iGoToTheInjectedUrl()
+    public function iGoToTheInjectedUrl(): void
     {
         // add a new route to the system under test by accessing the container and
         // acting on the application directly.
-        $app = $this->container->get(Application::class);
+        /** @var Application $app */
+        $app = $this->container?->get(Application::class);
         $app->get('/injection',
-            function (ServerRequestInterface $request): ResponseInterface {
+            function (): ResponseInterface {
                 $response = new Response();
                 $response->getBody()->write('Injected!');
 
