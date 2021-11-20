@@ -20,7 +20,7 @@ trait RuntimeMinkContext
     /**
      * @BeforeScenario
      */
-    public function runtimeMinkSession()
+    public function runtimeMinkSession(): void
     {
         if (! $this instanceof RawMinkContext) {
             throw new RuntimeException(

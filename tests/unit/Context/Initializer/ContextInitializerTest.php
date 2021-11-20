@@ -9,7 +9,6 @@ use Acpr\Behat\Psr\Context\Psr11AwareContext;
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
-use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Mink\Session as MinkSession;
 use PHPUnit\Framework\TestCase;
@@ -28,20 +27,9 @@ class ContextInitializerTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy|PsrFactory
-     */
-    private $psrFactoryProphecy;
-
-    /**
-     * @var ObjectProphecy|MinkSessionFactory
-     */
-    private $minkSessionFactoryProphecy;
-
-    /**
-     * @var ObjectProphecy|RuntimeConfigurableKernel
-     */
-    private $runtimeConfigurableKernelProphecy;
+    private ?ObjectProphecy $psrFactoryProphecy = null;
+    private ?ObjectProphecy $minkSessionFactoryProphecy = null;
+    private ?ObjectProphecy $runtimeConfigurableKernelProphecy = null;
 
     public function setUp(): void
     {
@@ -131,12 +119,14 @@ class ContextInitializerTest extends TestCase
         $contextProphecy = $this->prophesize(Psr11AwareContext::class);
 
         $psrFactoryMock = new class($containerProphecy, $applicationProphecy) implements PsrFactoryInterface {
-            public function __construct(ObjectProphecy $containerProphecy, ObjectProphecy $applicationProphecy)
-            {
-                $this->containerProphecy = $containerProphecy;
-                $this->applicationProphecy = $applicationProphecy;
-            }
+            public function __construct(
+                private ObjectProphecy $containerProphecy,
+                private ObjectProphecy $applicationProphecy
+            ) {}
 
+            /**
+             * @psalm-param-out \stdClass $container
+             */
             public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
             {
                 $container = new \stdClass(); // why is this possible?

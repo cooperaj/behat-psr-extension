@@ -10,6 +10,7 @@ use Behat\Mink\Session as MinkSession;
 use Behat\MinkExtension\Context\RawMinkContext;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionClass;
 use RuntimeException;
 
@@ -55,6 +56,7 @@ class RuntimeMinkContextTest extends TestCase
      */
     public function it_correctly_registers_a_new_mink_session_in_a_valid_context_class(): void
     {
+        /** @psalm-suppress MissingConstructor */
         $contextStubClass = new class() extends RawMinkContext {
             use RuntimeMinkContext;
 
@@ -68,7 +70,10 @@ class RuntimeMinkContextTest extends TestCase
             }
         };
 
+        /** @var ObjectProphecy<MinkSession>|MinkSession $minkSessionProphecy */
         $minkSessionProphecy = $this->prophesize(MinkSession::class);
+
+        /** @var ObjectProphecy<Mink>|Mink $minkProphecy */
         $minkProphecy = $this->prophesize(Mink::class);
         $minkProphecy->registerSession('psr', $minkSessionProphecy->reveal())
             ->shouldBeCalled();
