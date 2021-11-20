@@ -38,6 +38,7 @@
     "phpunit/phpunit": "^9.0",
     "phpspec/prophecy-phpunit": "^2.0",
     "vimeo/psalm": "^4.8",
-    "infection/infection": ">=0.15"
+    "infection/infection": ">=0.15",
+    "psalm/plugin-phpunit": "^0.16.1"
   }
 }
