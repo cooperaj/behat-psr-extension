@@ -10,10 +10,7 @@ use RuntimeException;
 
 trait RuntimeMinkContext
 {
-    /**
-     * @var MinkSession
-     */
-    private $minkSession;
+    private MinkSession $minkSession;
 
     public function setMinkSession(MinkSession $session): void
     {

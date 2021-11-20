@@ -9,20 +9,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PsrFactory implements PsrFactoryInterface
 {
-    /**
-     * @var string
-     */
-    private $containerFilePath;
-    /**
-     * @var string
-     */
-    private $applicationFilePath;
-
-    public function __construct(string $containerFilePath, string $applicationFilePath)
-    {
-        $this->containerFilePath = $containerFilePath;
-        $this->applicationFilePath = $applicationFilePath;
-    }
+    public function __construct(
+        private string $containerFilePath,
+        private string $applicationFilePath,
+    ) {}
 
     /**
      * @inheritDoc

@@ -14,23 +14,10 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class SymfonyPsrTranslator
 {
-    /**
-     * @var HttpFoundationFactoryInterface
-     */
-    private $symfonyFactory;
-    /**
-     * @var HttpMessageFactoryInterface
-     */
-    private $psrFactory;
-
     public function __construct(
-        HttpFoundationFactoryInterface $symfonyFactory,
-        HttpMessageFactoryInterface $psrFactory
-    )
-    {
-        $this->symfonyFactory = $symfonyFactory;
-        $this->psrFactory = $psrFactory;
-    }
+        private HttpFoundationFactoryInterface $symfonyFactory,
+        private HttpMessageFactoryInterface $psrFactory,
+    ) {}
 
     /**
      * Takes a Symfony Http request and returns a Psr request
