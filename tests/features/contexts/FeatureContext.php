@@ -16,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class FeatureContext extends MinkContext implements Psr11MinkAwareContext
 {
     // this trait implements the methods required by the Psr11MinkAwareContext interface, you don't
-    // have to use it in your contexts but you do have to do what it does.
+    // have to use it in your contexts, but you do have to do what it does.
     use RuntimeMinkContext;
 
     /**
