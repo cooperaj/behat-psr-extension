@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TestAcpr\Behar\Psr\ServiceContainer;
+namespace TestAcpr\Behat\Psr\ServiceContainer\Factory;
 
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use PHPUnit\Framework\TestCase;
