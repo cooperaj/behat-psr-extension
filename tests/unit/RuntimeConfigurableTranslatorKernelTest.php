@@ -9,6 +9,7 @@ use Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel;
 use Acpr\Behat\Psr\SymfonyPsrTranslator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\{Message\ResponseInterface, Message\ServerRequestInterface, Server\RequestHandlerInterface};
 use Symfony\{Component\HttpFoundation\Request, Component\HttpFoundation\Response};
 
@@ -20,6 +21,8 @@ use Symfony\{Component\HttpFoundation\Request, Component\HttpFoundation\Response
  */
 class RuntimeConfigurableTranslatorKernelTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      * @covers ::__construct

@@ -10,6 +10,7 @@ use Behat\Mink\Driver\BrowserKitDriver;
 use Behat\Mink\Session;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -21,6 +22,8 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
  */
 class MinkSessionFactoryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      * @covers ::__construct

@@ -13,6 +13,7 @@ use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Mink\Session as MinkSession;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,6 +26,8 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class ContextInitializerTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy|PsrFactory
      */

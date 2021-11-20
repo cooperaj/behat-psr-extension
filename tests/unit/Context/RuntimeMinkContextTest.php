@@ -9,6 +9,7 @@ use Behat\Mink\Mink;
 use Behat\Mink\Session as MinkSession;
 use Behat\MinkExtension\Context\RawMinkContext;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionClass;
 use RuntimeException;
 
@@ -20,6 +21,8 @@ use RuntimeException;
  */
 class RuntimeMinkContextTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      * @covers ::setMinkSession
