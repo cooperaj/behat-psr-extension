@@ -10,8 +10,8 @@
     }
   ],
   "require": {
-    "php": "^8.0",
-    "friends-of-behat/mink-browserkit-driver": "^1.4",
+    "php": "^8.1",
+    "friends-of-behat/mink-browserkit-driver": "^1.6.1",
     "friends-of-behat/mink-extension": "^2.4",
     "symfony/http-foundation": "^5.1",
     "symfony/psr-http-message-bridge": "^2.0",
@@ -40,5 +40,10 @@
     "vimeo/psalm": "^4.8",
     "infection/infection": ">=0.15",
     "psalm/plugin-phpunit": "^0.16.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "infection/extension-installer": true
+    }
   }
 }

@@ -12,13 +12,14 @@ use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
 use Psr\Container\ContainerInterface;
+use RuntimeException;
 
 class ContextInitializer implements BehatContextInitializer
 {
     public function __construct(
-        private PsrFactoryInterface $factory,
-        private MinkSessionFactory $minkSessionFactory,
-        private RuntimeConfigurableKernel $kernel,
+        readonly private PsrFactoryInterface $factory,
+        readonly private MinkSessionFactory $minkSessionFactory,
+        readonly private RuntimeConfigurableKernel $kernel,
     ) {}
 
     public function initializeContext(Context $context): void
@@ -27,7 +28,7 @@ class ContextInitializer implements BehatContextInitializer
         $application = $this->factory->createApplication($container);
 
         if (!$container instanceof ContainerInterface) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'It appears you are using your own Application/Container factory and have inappropriately ' .
                 'altered or invalidated the Container as a part of your Application initialisation. In all cases a' .
                 'PSR7 container must be available.'

@@ -15,24 +15,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
- * Class MinkSessionFactoryTest
- *
- * @package TestAcpr\Behat\Psr\ServiceContainer\Factory
  * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory
  */
 class MinkSessionFactoryTest extends TestCase
 {
     use ProphecyTrait;
-
-    /**
-     * @test
-     * @covers ::__construct
-     */
-    public function it_thows_an_exception_if_the_path_isnt_right(): void
-    {
-        $this->expectException(\RuntimeException::class);
-        $factory = new MinkSessionFactory('http://localhost');
-    }
 
     /**
      * @test

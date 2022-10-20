@@ -10,9 +10,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class PsrFactoryTest
- *
- * @package TestAcpr\Behar\Psr\ServiceContainer
  * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory
  */
 class PsrFactoryTest extends TestCase
@@ -72,7 +69,7 @@ class PsrFactoryTest extends TestCase
         $factory = $this->createBrokenFactory();
 
         $this->expectException(\InvalidArgumentException::class);
-        $container = $factory->createContainer();
+        $factory->createContainer();
     }
 
     /**
@@ -115,7 +112,7 @@ class PsrFactoryTest extends TestCase
         $factory = $this->createBrokenFactory();
 
         $this->expectException(\InvalidArgumentException::class);
-        $application = $factory->createApplication();
+        $factory->createApplication();
     }
 
     /**
@@ -124,13 +121,13 @@ class PsrFactoryTest extends TestCase
      * @covers ::createContainer
      * @covers ::createApplication
      */
-    public function throw_expection_when_making_an_application_if_no_container_present_afterwards(): void
+    public function throw_exception_when_making_an_application_if_no_container_present_afterwards(): void
     {
         $factory = $this->createSubtlyBrokenFactory();
 
         $container = null;
 
         $this->expectException(\RuntimeException::class);
-        $application = $factory->createApplication($container);
+        $factory->createApplication($container);
     }
 }

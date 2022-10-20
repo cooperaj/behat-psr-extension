@@ -13,9 +13,6 @@ use Symfony\Bridge\PsrHttpMessage\{HttpFoundationFactoryInterface, HttpMessageFa
 use Symfony\Component\HttpFoundation\{Request as SymfonyRequest, Response as SymfonyResponse};
 
 /**
- * Class SymfonyPsrTranslatorTest
- *
- * @package TestAcpr\Behat\Psr
  * @coversDefaultClass  \Acpr\Behat\Psr\SymfonyPsrTranslator
  */
 class SymfonyPsrTranslatorTest extends TestCase

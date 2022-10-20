@@ -12,33 +12,23 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class PsrDriverFactory implements DriverFactory
 {
-    /**
-     * @inheritDoc
-     */
     public function getDriverName(): string
     {
         return 'psr';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function supportsJavascript(): bool
     {
         return false;
     }
 
     /**
-     * @inheritDoc
      * @codeCoverageIgnore
      */
     public function configure(ArrayNodeDefinition $builder): void
     {
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildDriver(array $config): Definition
     {
         return new Definition(

@@ -14,9 +14,6 @@ use Psr\Http\{Message\ResponseInterface, Message\ServerRequestInterface, Server\
 use Symfony\{Component\HttpFoundation\Request, Component\HttpFoundation\Response};
 
 /**
- * Class RuntimeConfigurableTranslatorKernelTest
- *
- * @package TestAcpr\Behat\Psr
  * @coversDefaultClass  \Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel
  */
 class RuntimeConfigurableTranslatorKernelTest extends TestCase
@@ -97,6 +94,6 @@ class RuntimeConfigurableTranslatorKernelTest extends TestCase
             $translatorProphecy->reveal());
 
         $this->expectException(\RuntimeException::class);
-        $response = $kernel->handle($requestProphecy->reveal());
+        $kernel->handle($requestProphecy->reveal());
     }
 }

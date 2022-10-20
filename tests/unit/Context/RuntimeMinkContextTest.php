@@ -15,9 +15,6 @@ use ReflectionClass;
 use RuntimeException;
 
 /**
- * Class RuntimeMinkContextTest
- *
- * @package TestAcpr\Behat\Psr\Context
  * @coversDefaultClass \Acpr\Behat\Psr\Context\RuntimeMinkContext
  */
 class RuntimeMinkContextTest extends TestCase
@@ -41,7 +38,7 @@ class RuntimeMinkContextTest extends TestCase
      * @test
      * @coversNothing
      */
-    public function it_defines_a_before_scenario_function()
+    public function it_defines_a_before_scenario_function(): void
     {
         $reflectionClass = new ReflectionClass(RuntimeMinkContext::class);
         $method = $reflectionClass->getMethod('runtimeMinkSession');
