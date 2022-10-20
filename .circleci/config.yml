@@ -69,6 +69,12 @@ jobs:
       - image: circleci/php:8.0-cli
     steps:
       - build_test
+
+  build_test_81:
+    docker:
+      - image: circleci/php:8.1-cli
+    steps:
+      - build_test
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -112,7 +118,11 @@ workflows:
           filters:
             branches:
               only: php7x-compat
-      - build_test_80
+      - build_test_80:
+          filters:
+            branches:
+              only: php80-compat
+      - build_test_81
       - upload_codecov:
           requires:
-            - build_test_80
+            - build_test_81
