@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Acpr\Behat\Psr\ServiceContainer\Factory;
 
+use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 
 class PsrFactory implements PsrFactoryInterface
 {
     public function __construct(
-        private string $containerFilePath,
-        private string $applicationFilePath,
+        readonly private string $containerFilePath,
+        readonly private string $applicationFilePath,
     ) {}
 
-    /**
-     * @inheritDoc
-     */
     public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
     {
         /**
@@ -25,19 +24,18 @@ class PsrFactory implements PsrFactoryInterface
         $application = require $this->applicationFilePath;
 
         if (!$application instanceof RequestHandlerInterface) {
-            throw new \InvalidArgumentException('Loaded application is not a valid PSR7 application');
+            throw new InvalidArgumentException('Loaded application is not a valid PSR7 application');
         }
 
         if (!$container instanceof ContainerInterface) {
-            throw new \RuntimeException('A valid PSR11 ContainerInterface has not been created as a part of the application creation');
+            throw new RuntimeException(
+                'A valid PSR11 ContainerInterface has not been created as a part of the application creation'
+            );
         }
 
         return $application;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function createContainer(): ContainerInterface
     {
         /**
@@ -46,7 +44,7 @@ class PsrFactory implements PsrFactoryInterface
         $container = require $this->containerFilePath;
 
         if (!$container instanceof ContainerInterface) {
-            throw new \InvalidArgumentException('Loaded container is not a valid PSR11 ContainerInterface');
+            throw new InvalidArgumentException('Loaded container is not a valid PSR11 ContainerInterface');
         }
 
         return $container;

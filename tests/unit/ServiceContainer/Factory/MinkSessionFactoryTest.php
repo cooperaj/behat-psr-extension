@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
- * Class MinkSessionFactoryTest
- *
- * @package TestAcpr\Behat\Psr\ServiceContainer\Factory
  * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory
  */
 class MinkSessionFactoryTest extends TestCase

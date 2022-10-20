@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, RuntimeConfigurableKernel
 {
     public function __construct(
-        private SymfonyPsrTranslator $translator,
+        readonly private SymfonyPsrTranslator $translator,
         private ?RequestHandlerInterface $application = null,
     ) {}
 

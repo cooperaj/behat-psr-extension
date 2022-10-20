@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 class SymfonyPsrTranslator
 {
     public function __construct(
-        private HttpFoundationFactoryInterface $symfonyFactory,
-        private HttpMessageFactoryInterface $psrFactory,
+        readonly private HttpFoundationFactoryInterface $symfonyFactory,
+        readonly private HttpMessageFactoryInterface $psrFactory,
     ) {}
 
     /**
@@ -31,7 +31,7 @@ class SymfonyPsrTranslator
 
         /**
          * The translation process does not add a Cookie header and bypasses
-         * that using the *Request cookie handling. Which you would - cause it's there.
+         * that using the *Request cookie handling. Which you would - because it's there.
          *
          * But because the app may be directly accessing headers for cookies (maybe using FigCookies)
          * we should populate that manually.

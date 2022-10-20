@@ -15,10 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * Class ExtensionTest
- *
- * @package TestAcpr\Behat\Psr\ServiceContainer
- *
  * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Extension
  */
 class ExtensionTest extends TestCase

@@ -18,9 +18,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class ContextInitializerTest
- *
- * @package TestAcpr\Behat\Psr\Context\Initializer
  * @coversDefaultClass \Acpr\Behat\Psr\Context\Initializer\ContextInitializer
  */
 class ContextInitializerTest extends TestCase

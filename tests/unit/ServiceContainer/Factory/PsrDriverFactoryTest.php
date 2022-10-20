@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class PsrDriverFactoryTest
- *
- * @package TestAcpr\Behat\Psr\ServiceContainer\Factory
  * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\PsrDriverFactory
  */
 class PsrDriverFactoryTest extends TestCase

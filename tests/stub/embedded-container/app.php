@@ -14,6 +14,7 @@ $container = new \Laminas\ServiceManager\ServiceManager();
 // Inject config
 $container->setService('config', $config);
 
+/** @var \Mezzio\Application $app */
 $app = $container->get(\Mezzio\Application::class);
 
 return $app;
