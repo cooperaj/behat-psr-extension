@@ -29,11 +29,8 @@ final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, 
      * @param int $type
      * @param bool $catch
      * @return Response
-     *
-     *
-     * @psalm-suppress DeprecatedConstant TODO remove when ongoing PHP 7 support is dropped
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
+    public function handle(Request $request, int $type = self::MAIN_REQUEST, bool $catch = true): Response
     {
         if (is_null($this->application)) {
             throw new \RuntimeException('PSR7 Application not passed to constructor. Please ensure your ' .
