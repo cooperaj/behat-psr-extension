@@ -31,7 +31,7 @@ commands:
           environment:
             XDEBUG_MODE: coverage
       - run: ./vendor/bin/behat -f progress -o std -f junit -o tests/output/behat
-      - run: ./vendor/bin/psalm --show-info=false --shepherd
+      - run: ./tests/generate_container.php && ./vendor/bin/psalm --show-info=false --shepherd
 
       - store_test_results:
           path: tests/output
