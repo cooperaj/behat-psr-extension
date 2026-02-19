@@ -79,6 +79,12 @@ jobs:
       - image: cimg/php:8.1
     steps:
       - build_test
+
+  build_test_83:
+    docker:
+      - image: cimg/php:8.3
+    steps:
+      - build_test
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
@@ -126,7 +132,11 @@ workflows:
           filters:
             branches:
               only: php80-compat
-      - build_test_81
+      - build_test_81:
+          filters:
+            branches:
+              only: php81-compat
+      - build_test_83
       - upload_codecov:
           requires:
-            - build_test_81
+            - build_test_83
