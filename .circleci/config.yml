@@ -34,7 +34,7 @@ commands:
       - run: ./tests/generate_container.php && ./vendor/bin/psalm --show-info=false --shepherd
 
       - store_test_results:
-          path: tests/output
+          path: tests/output/phpunit/results.xml
 
   build_test_symfony4:
     description: Install dependencies for Symfony4 and run tests
