@@ -8,18 +8,18 @@ use Acpr\Behat\Psr\Context\Initializer\ContextInitializer;
 use Acpr\Behat\Psr\Context\Psr11AwareContext;
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
-use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactoryInterface;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Mink\Session as MinkSession;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * @coversDefaultClass \Acpr\Behat\Psr\Context\Initializer\ContextInitializer
- */
+#[CoversClass(ContextInitializer::class)]
 class ContextInitializerTest extends TestCase
 {
     use ProphecyTrait;
@@ -28,18 +28,15 @@ class ContextInitializerTest extends TestCase
     private ?ObjectProphecy $minkSessionFactoryProphecy = null;
     private ?ObjectProphecy $runtimeConfigurableKernelProphecy = null;
 
+    #[\Override]
     public function setUp(): void
     {
         $this->psrFactoryProphecy = $this->prophesize(PsrFactoryInterface::class);
-        $this->minkSessionFactoryProphecy = $this->prophesize(MinkSessionFactory::class);
+        $this->minkSessionFactoryProphecy = $this->prophesize(MinkSessionFactoryInterface::class);
         $this->runtimeConfigurableKernelProphecy = $this->prophesize(RuntimeConfigurableKernel::class);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::initializeContext
-     */
+    #[Test]
     public function it_correctly_initializes_a_psr11_context(): void
     {
         $containerProphecy = $this->prophesize(ContainerInterface::class);
@@ -47,7 +44,8 @@ class ContextInitializerTest extends TestCase
 
         $this->psrFactoryProphecy->createContainer()
             ->willReturn($containerProphecy->reveal());
-        $this->psrFactoryProphecy->createApplication($containerProphecy->reveal())
+        $container = $containerProphecy->reveal();
+        $this->psrFactoryProphecy->createApplication($container)
             ->willReturn($applicationProphecy->reveal());
 
         $contextProphecy = $this->prophesize(Psr11AwareContext::class);
@@ -63,22 +61,19 @@ class ContextInitializerTest extends TestCase
         $initializer->initializeContext($contextProphecy->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::initializeContext
-     */
+    #[Test]
     public function it_correctly_initializes_a_psr11_mink_aware_context(): void
     {
         $applicationProphecy = $this->prophesize(RequestHandlerInterface::class);
         $containerProphecy = $this->prophesize(ContainerInterface::class);
         $minkSessionProphecy = $this->prophesize(MinkSession::class);
 
-        $this->psrFactoryProphecy->createApplication($containerProphecy->reveal())
+        $container = $containerProphecy->reveal();
+        $this->psrFactoryProphecy->createApplication($container)
             ->willReturn($applicationProphecy->reveal());
 
         $this->psrFactoryProphecy->createContainer()
-            ->willReturn($containerProphecy->reveal());
+            ->willReturn($container);
 
         $this->minkSessionFactoryProphecy->__invoke($this->runtimeConfigurableKernelProphecy->reveal())
             ->willReturn($minkSessionProphecy->reveal());
@@ -87,7 +82,7 @@ class ContextInitializerTest extends TestCase
             ->shouldBeCalled();
 
         $contextProphecy = $this->prophesize(Psr11MinkAwareContext::class);
-        $contextProphecy->setContainer($containerProphecy->reveal())
+        $contextProphecy->setContainer($container)
             ->shouldBeCalled();
         $contextProphecy->setMinkSession($minkSessionProphecy->reveal())
             ->shouldBeCalled();
@@ -101,14 +96,7 @@ class ContextInitializerTest extends TestCase
         $initializer->initializeContext($contextProphecy->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::initializeContext
-     *
-     * If a developer implements their own PsrFactory they could fulfill the interface but break code
-     * by setting the pass by reference $container to null or a non-ContainerInterface value.
-     */
+    #[Test]
     public function it_detects_when_a_custom_factory_invalidates_a_container(): void
     {
         $containerProphecy = $this->prophesize(ContainerInterface::class);

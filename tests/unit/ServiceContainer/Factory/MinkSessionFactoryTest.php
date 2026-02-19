@@ -7,25 +7,20 @@ namespace TestAcpr\Behat\Psr\ServiceContainer\Factory;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
 use Behat\Mink\Driver\BrowserKitDriver;
-use Behat\Mink\Session;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory
- */
+#[CoversClass(MinkSessionFactory::class)]
 class MinkSessionFactoryTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::__invoke
-     */
+    #[Test]
     public function it_creates_a_session_that_wraps_our_runtime_kernel(): void
     {
         $factory = new MinkSessionFactory('http://localhost/');
@@ -38,7 +33,6 @@ class MinkSessionFactoryTest extends TestCase
 
         $session = $factory($kernel->reveal());
 
-        $this->assertInstanceOf(Session::class, $session);
         $this->assertInstanceOf(BrowserKitDriver::class, $session->getDriver());
 
         /** @var BrowserKitDriver $driver */

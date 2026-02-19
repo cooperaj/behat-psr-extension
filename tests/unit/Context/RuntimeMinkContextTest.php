@@ -8,36 +8,23 @@ use Acpr\Behat\Psr\Context\RuntimeMinkContext;
 use Behat\Mink\Mink;
 use Behat\Mink\Session as MinkSession;
 use Behat\MinkExtension\Context\RawMinkContext;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use ReflectionClass;
 use RuntimeException;
 
-/**
- * @coversDefaultClass \Acpr\Behat\Psr\Context\RuntimeMinkContext
- */
+#[CoversClass(RuntimeMinkContext::class)]
 class RuntimeMinkContextTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @test
-     * @covers ::setMinkSession
-     */
-    public function it_provides_the_ability_to_set_a_mink_session(): void
-    {
-        $contextMock = $this->getMockForTrait(RuntimeMinkContext::class);
-
-        $this->assertTrue(
-            method_exists($contextMock, 'setMinkSession')
-        );
-    }
-
-    /**
-     * @test
-     * @coversNothing
-     */
+    #[Test]
+    #[CoversNothing]
     public function it_defines_a_before_scenario_function(): void
     {
         $reflectionClass = new ReflectionClass(RuntimeMinkContext::class);
@@ -46,11 +33,7 @@ class RuntimeMinkContextTest extends TestCase
         $this->assertStringContainsString('@BeforeScenario', $method->getDocComment());
     }
 
-    /**
-     * @test
-     * @covers ::setMinkSession
-     * @covers ::runtimeMinkSession
-     */
+    #[Test]
     public function it_correctly_registers_a_new_mink_session_in_a_valid_context_class(): void
     {
         /** @psalm-suppress MissingConstructor */
@@ -60,6 +43,7 @@ class RuntimeMinkContextTest extends TestCase
             public Mink $mink;
             public int $getMinkCallCount = 0;
 
+            #[\Override]
             public function getMink(): Mink
             {
                 $this->getMinkCallCount++;
@@ -84,11 +68,7 @@ class RuntimeMinkContextTest extends TestCase
         $this->assertGreaterThan(0, $contextStubClass->getMinkCallCount);
     }
 
-    /**
-     * @test
-     * @covers ::setMinkSession
-     * @covers ::runtimeMinkSession
-     */
+    #[Test]
     public function it_throws_an_exception_when_not_used_in_a_correct_class(): void
     {
         $contextStubClass = new class() {
@@ -103,10 +83,7 @@ class RuntimeMinkContextTest extends TestCase
         $contextStubClass->runtimeMinkSession();
     }
 
-    /**
-     * @test
-     * @covers ::runtimeMinkSession
-     */
+    #[Test]
     public function it_throws_an_exception_when_not_initialized_correctly(): void
     {
         $contextStubClass = new class() extends RawMinkContext {

@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
-class SymfonyPsrTranslator
+final readonly class SymfonyPsrTranslator implements SymfonyPsrTranslatorInterface
 {
     public function __construct(
-        readonly private HttpFoundationFactoryInterface $symfonyFactory,
-        readonly private HttpMessageFactoryInterface $psrFactory,
+        private HttpFoundationFactoryInterface $symfonyFactory,
+        private HttpMessageFactoryInterface $psrFactory,
     ) {}
 
     /**
@@ -25,6 +25,7 @@ class SymfonyPsrTranslator
      * @param HttpFoundationRequest $request
      * @return PsrRequest
      */
+    #[\Override]
     public function translateRequest(HttpFoundationRequest $request): PsrRequest
     {
         $psrRequest = $this->psrFactory->createRequest($request);
@@ -50,6 +51,7 @@ class SymfonyPsrTranslator
      * @param PsrResponse $response
      * @return HttpFoundationResponse
      */
+    #[\Override]
     public function translateResponse(PsrResponse $response): HttpFoundationResponse
     {
         return $this->symfonyFactory->createResponse($response);

@@ -15,10 +15,11 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, RuntimeConfigurableKernel
 {
     public function __construct(
-        readonly private SymfonyPsrTranslator $translator,
+        readonly private SymfonyPsrTranslatorInterface $translator,
         private ?RequestHandlerInterface $application = null,
     ) {}
 
+    #[\Override]
     public function setApplication(RequestHandlerInterface $application): void
     {
         $this->application = $application;
@@ -30,6 +31,7 @@ final class RuntimeConfigurableTranslatorKernel implements HttpKernelInterface, 
      * @param bool $catch
      * @return Response
      */
+    #[\Override]
     public function handle(Request $request, int $type = self::MAIN_REQUEST, bool $catch = true): Response
     {
         if (is_null($this->application)) {

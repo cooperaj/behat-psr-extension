@@ -4,30 +4,26 @@ declare(strict_types=1);
 
 namespace TestAcpr\Behat\Psr;
 
-use Acpr\Behat\Psr\RuntimeConfigurableKernel;
 use Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel;
 use Acpr\Behat\Psr\SymfonyPsrTranslator;
+use Acpr\Behat\Psr\SymfonyPsrTranslatorInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\{Message\ResponseInterface, Message\ServerRequestInterface, Server\RequestHandlerInterface};
 use Symfony\{Component\HttpFoundation\Request, Component\HttpFoundation\Response};
 
-/**
- * @coversDefaultClass  \Acpr\Behat\Psr\RuntimeConfigurableTranslatorKernel
- */
+#[CoversClass(RuntimeConfigurableTranslatorKernel::class)]
 class RuntimeConfigurableTranslatorKernelTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::handle
-     */
+    #[Test]
     public function handles_correctly_when_created_with_application(): void
     {
-        $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
+        $translatorProphecy = $this->prophesize(SymfonyPsrTranslatorInterface::class);
         $translatorProphecy->translateRequest(Argument::type(Request::class))
             ->willReturn($this->prophesize(ServerRequestInterface::class)->reveal());
         $translatorProphecy->translateResponse(Argument::type(ResponseInterface::class))
@@ -43,20 +39,13 @@ class RuntimeConfigurableTranslatorKernelTest extends TestCase
             $translatorProphecy->reveal(),
             $applicationProphecy->reveal());
 
-        $response = $kernel->handle($requestProphecy->reveal());
-
-        $this->assertInstanceOf(Response::class, $response);
+        $kernel->handle($requestProphecy->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::setApplication
-     * @covers ::handle
-     */
+    #[Test]
     public function handles_correctly_when_initialized_with_application(): void
     {
-        $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
+        $translatorProphecy = $this->prophesize(SymfonyPsrTranslatorInterface::class);
         $translatorProphecy->translateRequest(Argument::type(Request::class))
             ->willReturn($this->prophesize(ServerRequestInterface::class)->reveal());
         $translatorProphecy->translateResponse(Argument::type(ResponseInterface::class))
@@ -71,22 +60,15 @@ class RuntimeConfigurableTranslatorKernelTest extends TestCase
         $kernel = new RuntimeConfigurableTranslatorKernel(
             $translatorProphecy->reveal());
 
-        $this->assertInstanceOf(RuntimeConfigurableKernel::class, $kernel);
         $kernel->setApplication($applicationProphecy->reveal());
 
-        $response = $kernel->handle($requestProphecy->reveal());
-
-        $this->assertInstanceOf(Response::class, $response);
+        $kernel->handle($requestProphecy->reveal());
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::handle
-     */
+    #[Test]
     public function throws_exception_when_not_initialized_with_application(): void
     {
-        $translatorProphecy = $this->prophesize(SymfonyPsrTranslator::class);
+        $translatorProphecy = $this->prophesize(SymfonyPsrTranslatorInterface::class);
 
         $requestProphecy = $this->prophesize(Request::class);
 

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace TestAcpr\Behat\Psr\ServiceContainer\Factory;
 
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * @coversDefaultClass \Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactory
- */
+#[CoversClass(PsrFactory::class)]
 class PsrFactoryTest extends TestCase
 {
     private function createBrokenFactory(): PsrFactory
@@ -46,11 +46,7 @@ class PsrFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createContainer
-     */
+    #[Test]
     public function create_a_container(): void
     {
         $factory = $this->createMezzioFactory();
@@ -59,11 +55,7 @@ class PsrFactoryTest extends TestCase
         $this->assertInstanceOf(ContainerInterface::class, $container);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createContainer
-     */
+    #[Test]
     public function throw_exception_if_container_creation_fails(): void
     {
         $factory = $this->createBrokenFactory();
@@ -72,12 +64,7 @@ class PsrFactoryTest extends TestCase
         $factory->createContainer();
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createContainer
-     * @covers ::createApplication
-     */
+    #[Test]
     public function create_an_application(): void
     {
         $factory = $this->createMezzioFactory();
@@ -87,11 +74,7 @@ class PsrFactoryTest extends TestCase
         $this->assertInstanceOf(RequestHandlerInterface::class, $application);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createApplication
-     */
+    #[Test]
     public function create_an_application_without_a_supplied_container(): void
     {
         $factory = $this->createEmbeddedFactory();
@@ -102,11 +85,7 @@ class PsrFactoryTest extends TestCase
         $this->assertInstanceOf(RequestHandlerInterface::class, $application);
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createApplication
-     */
+    #[Test]
     public function throw_exception_if_application_creation_fails(): void
     {
         $factory = $this->createBrokenFactory();
@@ -115,12 +94,7 @@ class PsrFactoryTest extends TestCase
         $factory->createApplication();
     }
 
-    /**
-     * @test
-     * @covers ::__construct
-     * @covers ::createContainer
-     * @covers ::createApplication
-     */
+    #[Test]
     public function throw_exception_when_making_an_application_if_no_container_present_afterwards(): void
     {
         $factory = $this->createSubtlyBrokenFactory();

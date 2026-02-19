@@ -9,12 +9,13 @@ use Behat\Mink\Driver\BrowserKitDriver;
 use Behat\Mink\Session;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-class MinkSessionFactory
+final readonly class MinkSessionFactory implements MinkSessionFactoryInterface
 {
-    public function __construct(readonly private string $minkBasePath)
+    public function __construct(private string $minkBasePath)
     {
     }
 
+    #[\Override]
     public function __invoke(RuntimeConfigurableKernel $kernel): Session
     {
         $client = new HttpKernelBrowser($kernel);

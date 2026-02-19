@@ -7,21 +7,22 @@ namespace Acpr\Behat\Psr\Context\Initializer;
 use Acpr\Behat\Psr\Context\Psr11AwareContext;
 use Acpr\Behat\Psr\Context\Psr11MinkAwareContext;
 use Acpr\Behat\Psr\RuntimeConfigurableKernel;
-use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactory;
+use Acpr\Behat\Psr\ServiceContainer\Factory\MinkSessionFactoryInterface;
 use Acpr\Behat\Psr\ServiceContainer\Factory\PsrFactoryInterface;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BehatContextInitializer;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
-class ContextInitializer implements BehatContextInitializer
+final readonly class ContextInitializer implements BehatContextInitializer
 {
     public function __construct(
-        readonly private PsrFactoryInterface $factory,
-        readonly private MinkSessionFactory $minkSessionFactory,
-        readonly private RuntimeConfigurableKernel $kernel,
+        private PsrFactoryInterface $factory,
+        private MinkSessionFactoryInterface $minkSessionFactory,
+        private RuntimeConfigurableKernel $kernel,
     ) {}
 
+    #[\Override]
     public function initializeContext(Context $context): void
     {
         $container = $this->factory->createContainer();

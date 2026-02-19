@@ -12,11 +12,13 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class PsrDriverFactory implements DriverFactory
 {
+    #[\Override]
     public function getDriverName(): string
     {
         return 'psr';
     }
 
+    #[\Override]
     public function supportsJavascript(): bool
     {
         return false;
@@ -25,10 +27,12 @@ final class PsrDriverFactory implements DriverFactory
     /**
      * @codeCoverageIgnore
      */
+    #[\Override]
     public function configure(ArrayNodeDefinition $builder): void
     {
     }
 
+    #[\Override]
     public function buildDriver(array $config): Definition
     {
         return new Definition(

@@ -9,13 +9,14 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 
-class PsrFactory implements PsrFactoryInterface
+final class PsrFactory implements PsrFactoryInterface
 {
     public function __construct(
         readonly private string $containerFilePath,
         readonly private string $applicationFilePath,
     ) {}
 
+    #[\Override]
     public function createApplication(?ContainerInterface &$container = null): RequestHandlerInterface
     {
         /**
@@ -36,6 +37,7 @@ class PsrFactory implements PsrFactoryInterface
         return $application;
     }
 
+    #[\Override]
     public function createContainer(): ContainerInterface
     {
         /**
