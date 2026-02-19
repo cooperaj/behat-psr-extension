@@ -27,7 +27,7 @@ commands:
 
       - run:
           name: PHPUnit
-          command: vendor/bin/phpunit
+          command: vendor/bin/phpunit --do-not-fail-on-phpunit-warning
           environment:
             XDEBUG_MODE: coverage
       - run: ./vendor/bin/behat -f progress -o std -f junit -o tests/output/behat

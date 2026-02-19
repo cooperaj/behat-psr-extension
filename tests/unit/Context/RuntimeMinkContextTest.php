@@ -24,7 +24,6 @@ class RuntimeMinkContextTest extends TestCase
     use ProphecyTrait;
 
     #[Test]
-    #[CoversNothing]
     public function it_defines_a_before_scenario_function(): void
     {
         $reflectionClass = new ReflectionClass(RuntimeMinkContext::class);
@@ -51,10 +50,8 @@ class RuntimeMinkContextTest extends TestCase
             }
         };
 
-        /** @var ObjectProphecy<MinkSession>|MinkSession $minkSessionProphecy */
         $minkSessionProphecy = $this->prophesize(MinkSession::class);
 
-        /** @var ObjectProphecy<Mink>|Mink $minkProphecy */
         $minkProphecy = $this->prophesize(Mink::class);
         $minkProphecy->registerSession('psr', $minkSessionProphecy->reveal())
             ->shouldBeCalled();
