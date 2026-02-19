@@ -7,6 +7,9 @@ commands:
   build_test:
     description: Install dependencies and run tests
     steps:
+      - run: sudo -E install-php-extensions xdebug
+      - run: sudo docker-php-ext-enable xdebug
+
       - checkout
 
       # Download and cache dependencies
@@ -24,7 +27,7 @@ commands:
 
       - run:
           name: PHPUnit
-          command: phpdbg -qrr vendor/bin/phpunit
+          command: vendor/bin/phpunit
           environment:
             XDEBUG_MODE: coverage
       - run: ./vendor/bin/behat -f progress -o std -f junit -o tests/output/behat
